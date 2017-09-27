@@ -6,12 +6,12 @@ class Body extends Component {
     constructor(props){
         super(props);
         this.state = {
-            phrases: []
+            phrases: [],
         }
+        this.addText = this.addText.bind(this);
     }
 
     addText(string){
-        console.log(this.state.phrases);
         this.state.phrases.push(string);
         this.setState({ phrases: this.state.phrases });
         console.log(this.state.phrases);
@@ -29,7 +29,13 @@ class Body extends Component {
                                     <h1>{ this.props.data.name }</h1>
                                     <h3>{ this.props.data.age }</h3>
                                     <h4>{ this.props.data.gender }</h4>
-
+                                    <ul>
+                                        {
+                                            this.state.phrases.map(phrase => 
+                                                <li key={ phrase.id }>{ phrase.phrase }</li>
+                                            )
+                                        }
+                                    </ul>
                                 </div>
                         </div>
                     </div>

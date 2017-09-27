@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+	
+let ID = 1;
 
 class TextBox extends Component {
 
 	handleKeyDown(e){
 		if(this.refs.text.value != '' && e.keyCode === 13){
-			this.props.addText(this.refs.text.value);
+			this.props.addText({ 
+				phrase: this.refs.text.value,
+				id: ID
+			});
+			ID++;
 			this.refs.text.value = '';
 		}
 	}
