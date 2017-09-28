@@ -14,3 +14,4 @@
 Route::get('/', function () {
     return view('test-react');
 });
+Route::resource('/test','TestController');

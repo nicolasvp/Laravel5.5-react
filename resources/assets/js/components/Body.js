@@ -5,6 +5,7 @@ class Body extends Component {
 
     constructor(props){
         super(props);
+        console.log(props);
         this.state = {
             phrases: [],
         }
@@ -14,7 +15,6 @@ class Body extends Component {
     addText(string){
         this.state.phrases.push(string);
         this.setState({ phrases: this.state.phrases });
-        console.log(this.state.phrases);
     }
 
 	render(){
