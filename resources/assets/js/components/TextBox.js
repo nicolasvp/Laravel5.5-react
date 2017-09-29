@@ -10,6 +10,7 @@ class TextBox extends Component {
 				phrase: this.refs.text.value,
 				id: ID
 			});
+			this.props.addChampion(this.refs.text.value);
 			ID++;
 			this.refs.text.value = '';
 		}

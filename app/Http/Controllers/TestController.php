@@ -35,7 +35,11 @@ class TestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $champion = Champion::create([
+                        'name' => $request->name
+                    ]);
+
+        return response()->json($champion);
     }
 
     /**

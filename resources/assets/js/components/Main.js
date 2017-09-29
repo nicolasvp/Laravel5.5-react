@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Header from './Header';
+import Footer from './Footer';
 import Body from './Body';
-import axios from 'axios';
 
 export default class Main extends Component {
 
@@ -16,50 +16,12 @@ export default class Main extends Component {
 		}
 	}
 
-    _fetchData(){
-        axios({
-          method:'get',
-          url:'http://localhost/Laravel5.5-react/public/test',
-          responseType:'JSON'
-        })
-        .then((champions) => {
-            this.setState({
-                champions: champions
-            },
-            (error) => {
-                console.log(error);
-            })
-        });
-            
-        }
-
-/*
-
-        axios.get('/Laravel5.5-react/public/test')
-          .then(function (response) {
-            //console.log(response.data);
-            return response.data;
-
-            response.data.map(champion =>
-                this.state.champions.push(champion)
-            )
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-        });
-  */
-    }
-
-    componentDidMount(){
-        this._fetchData();
-    }
-
     render() {
         return (
             <div>
                 <Header />
-                <Body data={ this.state } champions={ this._fetchData }/>
+                <Body data={ this.state }/>
+                <Footer />
             </div>
         );
     }
