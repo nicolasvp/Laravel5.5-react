@@ -4,9 +4,7 @@ class Footer extends Component {
 
     render(){
         return(
-            <div>
-                <footer className="footer text-center"> 2017 &copy; Laravel React </footer>
-            </div>
+            <footer className="footer text-center"> 2017 &copy; Laravel React </footer>
         )
     }
 }

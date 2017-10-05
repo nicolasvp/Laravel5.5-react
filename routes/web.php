@@ -15,3 +15,6 @@ Route::get('/', function () {
     return view('test-react');
 });
 Route::resource('/test','TestController');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

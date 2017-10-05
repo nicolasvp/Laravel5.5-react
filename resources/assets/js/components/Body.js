@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import TextBox from './TextBox';
+import Form from './Form';
+import Table from './Table';
 import axios from 'axios';
 
 class Body extends Component {
@@ -9,10 +11,15 @@ class Body extends Component {
         this.state = {
             phrases: [],
             name: '',
-            champions: []
+            champions: [],
+            newChamp: {
+                name: '',
+                line: '',
+                type: '',
+                date: '',
+                genre: ''
+            }
         };
-        this.addText = this.addText.bind(this);
-        this.addChampion = this.addChampion.bind(this);
     }
 
     _fetchData(){
@@ -21,39 +28,50 @@ class Body extends Component {
             url:'http://react.app/test',
             responseType:'json'
         })
-        .then((champions) => {
-            champions.data.map(champion =>{
-                this.state.champions.push(champion);
-            });
-            this.setState({
-                champions: this.state.champions
-            });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
+            .then((response) => {
+                response.data.champions.map(champion =>{
+                    this.state.champions.push(champion);
+                });
+                this.setState({
+                    champions: this.state.champions
+                });
 
-    addText(string){
-        this.state.phrases.push(string);
-        this.setState({ phrases: this.state.phrases });
-    }
-
-    addChampion(name){
-        axios.post('/test', {
-            name: name
-        })
-        .then((champion) => {
-            this.state.champions.push(champion.data);
-            this.setState({ champions: this.state.champions });
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     componentDidMount(){
         this._fetchData();
+    }
+
+    sendForm(e){
+        this.setState({newChamp: this.props.data.newChamp});
+       // e.preventDefault();
+       /*
+        axios.post('/test', {
+            newChamp : this.state.newChamp
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+*/
+     //  console.log(this.state.newChamp);
+       console.log(e);
+    }
+
+    handleInput(event)
+    {
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        this.state.newChamp[[name]] = value;
+       // this.setState({newChamp: this.props.data.newChamp});
     }
 
 	render(){
@@ -64,46 +82,11 @@ class Body extends Component {
                 </div>
                 <div className="container">
                     <div className="row">
-                        <div className="col-sm-6">
-                            <div className="white-box">
-                                <h3 className="box-title">Info Table</h3>
-                                <div className="table-responsive">
-                                    <table className="table color-bordered-table info-bordered-table">
-                                        <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Age</th>
-                                            <th>Genre</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>{ this.props.data.name }</td>
-                                            <td>{ this.props.data.age }</td>
-                                            <td>{ this.props.data.gender }</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                        <div className="col-md-6">
+                            <Form data={ this.state } handleInput={ this.handleInput } sendForm={ this.sendForm }/>
                         </div>
-                        <div className="col-md-8 col-md-offset-2">
-                            <div className="panel panel-default">
-                                <div className="panel-heading">Resultados de la bdd</div>
-                                    <div className="panel-body">
-                                        <h1>Ingresa un campeón</h1>
-                                        <TextBox addText = { this.addText } addChampion = { this.addChampion }/>
-                                        <ul>
-                                            {
-                                                this.state.champions.map(champion =>
-                                                    <li key={ champion.id }>{ champion.name }</li>
-                                                )
-                                            }
-                                        </ul>
-                                    </div>
-                            </div>
+                        <div className="col-md-6">
+                            <Table data={ this.state }/>
                         </div>
                     </div>
                 </div>
