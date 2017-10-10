@@ -8,17 +8,17 @@ class Champion extends Model
 {
     protected $table = 'champions';
 
-    protected $fillable = ['name','type_id','line_id','comment','genre','date'];
+    protected $fillable = ['name','type_id','line_id','photo','genre','date'];
 
     public $timestamps = false;
 
     public function Type()
     {
-        return $this->hasOne('App\Type','id','type_id');
+        return $this->belongsTo('App\Type','type_id','id');
     }
 
     public function Line()
     {
-        return $this->hasOne('App\Line','id','line_id');
+        return $this->belongsTo('App\Line','line_id','id');
     }
 }

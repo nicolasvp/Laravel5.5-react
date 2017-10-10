@@ -18,3 +18,8 @@ Route::resource('/test','TestController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/images/{filename}',function ($filename) {
+    $file = \Storage::disk('public')->get($filename);
+    return response($file, 200)->header('Content-Type', 'image/png');
+});

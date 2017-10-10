@@ -17,9 +17,12 @@ class Body extends Component {
                 line: '',
                 type: '',
                 date: '',
-                genre: ''
+                genre: '',
+                photo: ''
             }
         };
+        this.handleInput = this.handleInput.bind(this);
+        this.sendForm = this.sendForm.bind(this);
     }
 
     _fetchData(){
@@ -47,31 +50,43 @@ class Body extends Component {
     }
 
     sendForm(e){
-        this.setState({newChamp: this.props.data.newChamp});
-       // e.preventDefault();
-       /*
-        axios.post('/test', {
-            newChamp : this.state.newChamp
-        })
-            .then((response) => {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
+        e.preventDefault();
+
+        const fileInput = document.querySelector('#photo');
+        let formData = new FormData();
+        formData.append('photo-upload',fileInput.files[0]);
+        formData.append('name',this.state.newChamp.name);
+        formData.append('line',this.state.newChamp.line);
+        formData.append('type',this.state.newChamp.type);
+        formData.append('date',this.state.newChamp.date);
+        formData.append('genre',this.state.newChamp.genre);
+        const config = {
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+        
+        axios.post('/test',formData,config)
+        .then((response) => {
+            this.state.champions.push(response.data);
+            this.setState({
+                champions: this.state.champions
             });
-*/
-     //  console.log(this.state.newChamp);
-       console.log(e);
+            document.querySelector('#name').value = '';
+            document.querySelector('#line').value = '';
+            document.querySelector('#type').value = '';
+            document.querySelector('#date').value = '';
+            $("input:radio").attr("checked", false);
+            document.querySelector('#remove').click();
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
-    handleInput(event)
-    {
+    handleInput(event){
         const target = event.target;
         const value = target.value;
         const name = target.name;
-
         this.state.newChamp[[name]] = value;
-       // this.setState({newChamp: this.props.data.newChamp});
     }
 
 	render(){
@@ -82,10 +97,10 @@ class Body extends Component {
                 </div>
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-5">
                             <Form data={ this.state } handleInput={ this.handleInput } sendForm={ this.sendForm }/>
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-7">
                             <Table data={ this.state }/>
                         </div>
                     </div>

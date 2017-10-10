@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Form extends Component {
 
@@ -35,6 +36,7 @@ class Form extends Component {
 
     componentDidMount(){
         this._fetchData();
+
     }
 
     render(){
@@ -44,18 +46,18 @@ class Form extends Component {
                 <p className="text-muted m-b-30 font-13"> Bootstrap Elements </p>
                 <div className="row">
                     <div className="col-sm-12 col-xs-12">
-                        <form id="form-champ">
+                        <form id="form-champ" encType="multipart/form-data">
                             <div className="form-group">
                                 <label htmlFor="exampleInputuname">Nombre del campeón</label>
                                 <div className="input-group">
                                     <div className="input-group-addon"><i className="ti-user"></i></div>
-                                    <input type="text" className="form-control" id="name" name="name" onChange={ this.props.handleInput.bind(this) } placeholder="Nombre"></input>
+                                    <input ref="name" type="text" className="form-control" id="name" name="name" onChange={ this.props.handleInput.bind(this) } placeholder="Nombre"></input>
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label className="control-label">Linea</label>
-                                <select className="form-control" name="line" id="line" onChange={ this.props.handleInput.bind(this) }>
+                                <select className="form-control" name="line" id="line" onChange={ this.props.handleInput.bind(this) } defaultValue="">
                                     <option value="" disabled>Seleccione</option>
                                     {
                                         this.state.lines.map(line =>
@@ -66,8 +68,8 @@ class Form extends Component {
                                 </div>
                             <div className="form-group">
                                 <label className="control-label">Tipo</label>
-                                <select className="form-control" name="type" id="type" onChange={ this.props.handleInput.bind(this) }>
-                                    <option value="" disabled>Seleccione</option>
+                                <select className="form-control" name="type" id="type" onChange={ this.props.handleInput.bind(this) } defaultValue="">
+                                    <option value="">Seleccione</option>
                                     {
                                         this.state.types.map(type =>
                                             <option value={ type.id } key={ type.id }>{ type.name }</option>
@@ -107,11 +109,11 @@ class Form extends Component {
                                             <span className="fileinput-filename"></span>
                                         </div>
                                         <span className="input-group-addon btn btn-default btn-file">
-                                        <span className="fileinput-new">Select file</span>
-                                        <span className="fileinput-exists">Change</span>
-                                            <input type="file" name="image" id="image"></input>
+                                        <span className="fileinput-new">Seleccionar Foto</span>
+                                        <span className="fileinput-exists">Cambiar</span>
+                                            <input type="file" name="photo" id="photo" onChange={ this.props.handleInput.bind(this) }></input>
                                         </span>
-                                        <a href="#" className="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                        <a href="#" className="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput" id="remove">Eliminar</a>
                                     </div>
                             </div>
                             <button className="btn btn-success waves-effect waves-light m-r-10" onClick={this.props.sendForm.bind(this)}>Submit</button>
@@ -124,5 +126,12 @@ class Form extends Component {
     }
 }
 
-export default Form;                
+export default Form; 
 
+Form.defaultProps = {
+    name: 0
+};   
+
+Form.propTypes = {
+  name: PropTypes.number.isRequired
+};

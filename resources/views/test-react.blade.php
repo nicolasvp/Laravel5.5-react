@@ -49,6 +49,7 @@
     <script src="{{ asset('plugins/bower_components/peity/jquery.peity.init.js') }}"></script>
         <!-- Date Picker Plugin JavaScript -->
     <script src="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <!-- File Upload -->
     <script src="{{ asset('js/jasny-bootstrap.js') }}"></script>
     <script type="text/javascript">
         $('.mydatepicker').datepicker();

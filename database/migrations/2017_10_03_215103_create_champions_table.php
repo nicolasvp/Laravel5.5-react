@@ -18,6 +18,7 @@ class CreateChampionsTable extends Migration
             $table->string('comment')->nullable();
             $table->string('genre')->nullable();
             $table->dateTime('date');
+            $table->string('photo')->nullable();
             $table->timestamps();
         });
     }
