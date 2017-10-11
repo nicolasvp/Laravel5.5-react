@@ -35,12 +35,12 @@ class Table extends Component {
                                                 <td>{ champion.date.split(" ")[0] }</td>
                                                 <td><img alt={ champion.name } src={ 'images/' + champion.photo } width='50' height='50'></img></td>
                                                 <td>
-                                                    <button type="button" className="btn btn-default btn-sm">
-                                                      <span className="glyphicon glyphicon-trash"></span>
+                                                    <button type="button" name="destroy" className="btn btn-danger btn-sm" value={ champion.id } onClick={this.props.handleDestroy.bind(this)}>
+                                                      Eliminar
                                                     </button>
                                                 </td>
                                             </tr>
-                                        )
+                                        ) 
                                     }
                                 </tbody>
                             </table>

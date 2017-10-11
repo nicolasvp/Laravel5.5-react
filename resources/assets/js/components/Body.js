@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TextBox from './TextBox';
 import Form from './Form';
 import Table from './Table';
 import axios from 'axios';
@@ -23,6 +22,7 @@ class Body extends Component {
         };
         this.handleInput = this.handleInput.bind(this);
         this.sendForm = this.sendForm.bind(this);
+        this.handleDestroy = this.handleDestroy.bind(this);
     }
 
     _fetchData(){
@@ -78,7 +78,7 @@ class Body extends Component {
             document.querySelector('#remove').click();
         })
         .catch(function (error) {
-            console.log(error);
+            console.log(error.response.data.errors);
         });
     }
 
@@ -89,19 +89,42 @@ class Body extends Component {
         this.state.newChamp[[name]] = value;
     }
 
+    handleDestroy(event){
+        event.preventDefault();
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+
+        axios.delete('/test/'+value,value)
+        .then((response) => {
+            const champions = this.state.champions.filter(champion =>
+                champion.id !== parseInt(value)
+            );
+
+            this.setState({
+                champions: champions
+            });
+        
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        
+    }
+
 	render(){
 		return(
 		    <div>
                 <div className="preloader">
                     <div className="cssload-speeding-wheel"></div>
                 </div>
-                <div className="container">
+                <div className="container" style={{ width: 1600 }}>
                     <div className="row">
                         <div className="col-md-5">
                             <Form data={ this.state } handleInput={ this.handleInput } sendForm={ this.sendForm }/>
                         </div>
                         <div className="col-md-7">
-                            <Table data={ this.state }/>
+                            <Table data={ this.state } handleDestroy={ this.handleDestroy }/>
                         </div>
                     </div>
                 </div>

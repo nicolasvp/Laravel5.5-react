@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Champion;
 use App\Type;
 use App\Line;
+use Validator;
 
 class TestController extends Controller
 {
@@ -24,6 +25,15 @@ class TestController extends Controller
             $file = $request->file('photo-upload');
             $image_uploaded = \Storage::disk('public')->putFile('/', $file);            
         }
+
+       Validator::make($request->all(), [
+            'name' => 'required',
+            'type_id' => 'required',
+            'line_id' => 'required',
+            'date' => 'required',
+            'genre' => 'required',
+            'photo' => 'required',
+        ])->validate();
 
         $dateRequest = $request['date'];
         $date = strtotime($dateRequest);
@@ -58,6 +68,9 @@ class TestController extends Controller
 
     public function destroy($id)
     {
-        //
+        $champ = Champion::findOrFail($id);
+        $champ->delete();
+
+        return response()->json('ok');
     }
 }
