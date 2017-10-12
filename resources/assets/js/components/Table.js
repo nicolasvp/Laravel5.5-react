@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Modal from './Modal.js';
 
 class Table extends Component {
 
@@ -20,6 +21,7 @@ class Table extends Component {
                                     <th>Genero</th>
                                     <th>Fecha</th>
                                     <th>Foto</th>
+                                    <th>Editar</th>
                                     <th>Eliminar</th>
                                 </tr>
                                 </thead>
@@ -35,6 +37,11 @@ class Table extends Component {
                                                 <td>{ champion.date.split(" ")[0] }</td>
                                                 <td><img alt={ champion.name } src={ 'images/' + champion.photo } width='50' height='50'></img></td>
                                                 <td>
+                                                    <button type="button" name="edit" className="btn btn-info btn-sm" data-animation="false" data-toggle="modal" data-target="#myModal">
+                                                      Editar
+                                                    </button>                                                    
+                                                </td>
+                                                <td>
                                                     <button type="button" name="destroy" className="btn btn-danger btn-sm" value={ champion.id } onClick={this.props.handleDestroy.bind(this)}>
                                                       Eliminar
                                                     </button>
@@ -44,6 +51,7 @@ class Table extends Component {
                                     }
                                 </tbody>
                             </table>
+                            <Modal />
                         </div>
                     </div>
                 </div>
