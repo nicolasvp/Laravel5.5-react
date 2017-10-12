@@ -28,11 +28,11 @@ class TestController extends Controller
 
        Validator::make($request->all(), [
             'name' => 'required',
-            'type_id' => 'required',
-            'line_id' => 'required',
+            'type' => 'required',
+            'line' => 'required',
             'date' => 'required',
             'genre' => 'required',
-            'photo' => 'required',
+            'photo-upload' => 'required',
         ])->validate();
 
         $dateRequest = $request['date'];
