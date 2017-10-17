@@ -36,7 +36,6 @@ class Form extends Component {
 
     componentDidMount(){
         this._fetchData();
-
     }
 
     render(){
@@ -65,7 +64,7 @@ class Form extends Component {
                                         )
                                     }
                                 </select>
-                                </div>
+                            </div>
                             <div className="form-group">
                                 <label className="control-label">Tipo</label>
                                 <select className="form-control" name="type" id="type" onChange={ this.props.handleInput.bind(this) } defaultValue="">

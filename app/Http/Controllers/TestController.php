@@ -58,7 +58,9 @@ class TestController extends Controller
 
     public function edit($id)
     {
-        //
+        $champion = Champion::find($id);
+
+        return response()->json($champion);
     }
 
     public function update(Request $request, $id)

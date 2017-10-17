@@ -1,21 +1,49 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-
+import ModalComponent from './Modal';
 
 class Table extends Component {
     constructor(props){
         super(props);
         this.state = {
-             modal: false
+             modal: false,
+             champEdit: {
+                name: '',
+                line: '',
+                type: '',
+                date: '',
+                genre: '',
+                photo: ''                
+             },
+
         };
-        this.toggle = this.toggle.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
+        this.cancelModal = this.cancelModal.bind(this);
     }
 
-    toggle() {
+    handleEdit(event) {
         this.setState({
           modal: !this.state.modal
         });
+
+        const value = event.target.value;
+        axios.get('/test/'+value+'/edit',value)
+        .then((response) => {
+            this.setState({
+                champEdit: response.data
+            });
+            console.log(this.state.champEdit);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    cancelModal(){
+      this.setState({
+        modal: !this.state.modal
+      });
     }
 
     render(){
@@ -51,28 +79,17 @@ class Table extends Component {
                                                 <td>{ champion.date.split(" ")[0] }</td>
                                                 <td><img alt={ champion.name } src={ 'images/' + champion.photo } width='50' height='50'></img></td>
                                                 <td>
-                                                    <Button color="primary" onClick={this.toggle}>Editar</Button>
+                                                    <Button color="primary" name="edit" value={ champion.id } onClick={ this.handleEdit.bind(this) }>Editar</Button>
                                                 </td>
                                                 <td>
-                                                    <button type="button" name="destroy" className="btn btn-danger btn-sm" value={ champion.id } onClick={this.props.handleDestroy.bind(this)}>
-                                                      Eliminar
-                                                    </button>
+                                                    <Button color="danger" name="destroy" value={ champion.id } onClick={ this.props.handleDestroy.bind(this) }>Eliminar</Button>
                                                 </td>
                                             </tr>
                                         ) 
                                     }
                                 </tbody>
-                                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                                <ModalHeader toggle={this.toggle}>Editar el campeón: </ModalHeader>
-                                <ModalBody>
-                                    ACA DEBEN IR LOS CAMPOS PARA EDITAR
-                                </ModalBody>
-                                <ModalFooter>
-                                    <Button color="primary" onClick={this.toggle}>Aceptar</Button>{' '}
-                                    <Button color="secondary" onClick={this.toggle}>Cancelar</Button>
-                                </ModalFooter>
-                                </Modal>   
                             </table>
+                            <ModalComponent data={ this.state } handleEdit={ this.handleEdit } cancelModal={ this.cancelModal }/>  
                         </div>
                     </div>
                 </div>
