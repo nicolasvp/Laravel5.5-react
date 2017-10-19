@@ -65,7 +65,7 @@ class TestController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        dd($request['name']);
     }
 
     public function destroy($id)

@@ -27,6 +27,7 @@ class Table extends Component {
 
         };
         this.handleInput = this.handleInput.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
         this.handleDestroy = this.handleDestroy.bind(this);        
         this.handleClick = this.handleClick.bind(this);
         this.cancelModal = this.cancelModal.bind(this);
@@ -37,30 +38,55 @@ class Table extends Component {
         e.preventDefault();
 
         const fileInput = document.querySelector('#photo');
-        let formData = new FormData();
-        formData.append('photo-upload',fileInput.files[0]);
-        formData.append('name',this.state.newChamp.name);
-        formData.append('line',this.state.newChamp.line);
-        formData.append('type',this.state.newChamp.type);
-        formData.append('date',this.state.newChamp.date);
-        formData.append('genre',this.state.newChamp.genre);
+
         const config = {
             headers: { 'content-type': 'multipart/form-data' }
         }
         
-        axios.post('/test',formData,config)
-        .then((response) => {
-            this.props.updateChampList(response.data,'add');
-            document.querySelector('#name').value = '';
-            document.querySelector('#line').value = '';
-            document.querySelector('#type').value = '';
-            document.querySelector('#date').value = '';
-            $("input:radio").attr("checked", false);
-            document.querySelector('#remove').click();
-        })
-        .catch(function (error) {
-            console.log(error.response.data.errors);
-        });
+        if(e.target.name === 'store'){
+
+            let formData = new FormData();
+            formData.append('photo-upload',fileInput.files[0]);
+            formData.append('name',this.state.newChamp.name);
+            formData.append('line',this.state.newChamp.line);
+            formData.append('type',this.state.newChamp.type);
+            formData.append('date',this.state.newChamp.date);
+            formData.append('genre',this.state.newChamp.genre);
+
+            axios.post('/test',formData,config)
+            .then((response) => {
+                this.props.updateChampList(response.data,'add');
+                document.querySelector('#name').value = '';
+                document.querySelector('#line').value = '';
+                document.querySelector('#type').value = '';
+                document.querySelector('#date').value = '';
+                $("input:radio").attr("checked", false);
+                document.querySelector('#remove').click();
+            })
+            .catch(function (error) {
+                console.log(error.response.data.errors);
+            });           
+        }
+
+        if(e.target.name === 'update'){
+            const value = e.target.value;
+
+            let formDataUpdate = new FormData();
+            formDataUpdate.append('photo-upload',fileInput.files[0]);
+            formDataUpdate.append('name',this.state.editChamp.name);
+            formDataUpdate.append('line',this.state.editChamp.line);
+            formDataUpdate.append('type',this.state.editChamp.type);
+            formDataUpdate.append('date',this.state.editChamp.date);
+            formDataUpdate.append('genre',this.state.editChamp.genre);
+
+            axios.put('/test/'+value,formDataUpdate,config)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error.response.data.errors);
+            });           
+        }
 
         this.setState({
                 modal: !this.state.modal
@@ -72,6 +98,16 @@ class Table extends Component {
         const value = target.value;
         const name = target.name;
         this.state.newChamp[[name]] = value;
+    }
+
+    handleEdit(event){
+        const target = event.target;
+        const value = target.value;
+        const name = target.name;
+        this.state.champEdit[[name]] = value;
+        this.setState({
+            champEdit: this.state.champEdit
+        });
     }
 
     handleDestroy(event){
@@ -176,7 +212,14 @@ class Table extends Component {
                                     }
                                 </tbody>
                             </table>
-                            <ModalComponent data={ this.state } handleClick={ this.handleClick } handleInput={ this.handleInput } sendForm={ this.sendForm } cancelModal={ this.cancelModal }/>  
+                            <ModalComponent 
+                                data={ this.state } 
+                                handleClick={ this.handleClick } 
+                                handleInput={ this.handleInput } 
+                                handleEdit={ this.handleEdit }
+                                sendForm={ this.sendForm } 
+                                cancelModal={ this.cancelModal }
+                            />  
                         </div>
                     </div>
                 </div>

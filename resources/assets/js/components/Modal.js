@@ -11,7 +11,7 @@ class ModalComponent extends Component {
     this.state = {
         types: [],
         lines: []
-    };    
+    }; 
   }
 
   _fetchData(){
@@ -43,11 +43,14 @@ class ModalComponent extends Component {
 
   render(){
     let form = null;
+    let button = null;
     if(this.props.data.champEdit.name){
-      form = <FormEdit data={ this.props.data } state={ this.state } handleInput={ this.props.handleInput }/>;
+      form = <FormEdit data={ this.props.data } state={ this.state } handleEdit={ this.props.handleEdit }/>;
+      button = <Button color="primary" name="update" value={ this.props.data.champEdit.id } onClick={ this.props.sendForm.bind(this) }>Aceptar</Button>;
     }
     else{
       form = <FormAdd data={ this.state } handleInput={ this.props.handleInput }/>;
+      button = <Button color="primary" name="store" onClick={ this.props.sendForm.bind(this) }>Aceptar</Button>;
     }
     return(
       <div>
@@ -59,7 +62,7 @@ class ModalComponent extends Component {
             { form }
          </ModalBody>
          <ModalFooter>
-            <Button color="primary" onClick={ this.props.sendForm.bind(this) }>Aceptar</Button>
+            { button }
             <Button color="secondary" onClick={ this.props.cancelModal }>Cancelar</Button>
          </ModalFooter>
          </Modal>              
