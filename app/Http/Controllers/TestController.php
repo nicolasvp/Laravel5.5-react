@@ -20,6 +20,7 @@ class TestController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->all());
         if($request->hasFile('photo-upload'))
         {
             $file = $request->file('photo-upload');
@@ -65,7 +66,20 @@ class TestController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd($request['name']);
+  dd($request->all());
+        $dateRequest = $request['date'];
+        $date = strtotime($dateRequest);
+        dd($request->all());
+        $formatedDate = date('Y-m-d',$date);
+                       $champ_created = Champion::create([
+                            'name' => $request['name'],
+                            'type_id' => $request['type'],
+                            'line_id' => $request['line'],
+                            'date' => $formatedDate,
+                            'genre' => $request['genre']
+                        ]);
+        return response()->json($request->all());
+ 
     }
 
     public function destroy($id)

@@ -59563,20 +59563,38 @@ var Table = function (_Component) {
 
             if (e.target.name === 'update') {
                 var value = e.target.value;
-
                 var formDataUpdate = new FormData();
-                formDataUpdate.append('photo-upload', fileInput.files[0]);
-                formDataUpdate.append('name', this.state.editChamp.name);
-                formDataUpdate.append('line', this.state.editChamp.line);
-                formDataUpdate.append('type', this.state.editChamp.type);
-                formDataUpdate.append('date', this.state.editChamp.date);
-                formDataUpdate.append('genre', this.state.editChamp.genre);
+                //  formDataUpdate.append('photo-upload',fileInput.files[0]);
+                formDataUpdate.append('name', this.state.champEdit.name);
+                formDataUpdate.append('line', this.state.champEdit.line);
+                formDataUpdate.append('type', this.state.champEdit.type);
+                formDataUpdate.append('date', this.state.champEdit.date);
+                formDataUpdate.append('genre', this.state.champEdit.genre);
 
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.put('/test/' + value, formDataUpdate, config).then(function (response) {
-                    console.log(response);
-                }).catch(function (error) {
-                    console.log(error.response.data.errors);
-                });
+                formDataUpdate.append('dato', 'jeje');
+                //const data = {datos: '123123'};
+                var data = new FormData();
+
+                data.append('action', 'ADD');
+                data.append('param', 0);
+                data.append('secondParam', 0);
+                data.append('file', new Blob(['test payload'], { type: 'text/csv' }));
+
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.patch('test/1', data);
+                /*
+                            axios({
+                              method: 'put',
+                              url: '/test/'+value,
+                              data: formDataUpdate,
+                              headers: {'Content-Type': 'multipart/form-data'}
+                            })
+                            .then((response) => {
+                                console.log(response.data);
+                            })
+                            .catch(function (error) {
+                                console.log(error.response.data.errors);
+                            });        
+                        */
             }
 
             this.setState({
