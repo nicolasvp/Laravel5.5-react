@@ -20,7 +20,6 @@ class TestController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
         if($request->hasFile('photo-upload'))
         {
             $file = $request->file('photo-upload');
@@ -64,22 +63,30 @@ class TestController extends Controller
         return response()->json($champion);
     }
 
-    public function update(Request $request, $id)
+    public function updateChamp(Request $request)
     {
-  dd($request->all());
+        $champ = Champion::find($request['id']);
         $dateRequest = $request['date'];
         $date = strtotime($dateRequest);
-        dd($request->all());
         $formatedDate = date('Y-m-d',$date);
-                       $champ_created = Champion::create([
-                            'name' => $request['name'],
-                            'type_id' => $request['type'],
-                            'line_id' => $request['line'],
-                            'date' => $formatedDate,
-                            'genre' => $request['genre']
-                        ]);
-        return response()->json($request->all());
- 
+        
+        $champ->name = $request['name'];
+        $champ->type_id = $request['type'];
+        $champ->line_id = $request['line'];
+        $champ->date = $formatedDate;
+        $champ->genre = $request['genre'];
+
+        if($request->hasFile('photo-upload'))
+        {
+            $file = $request->file('photo-upload');
+            $image_uploaded = \Storage::disk('public')->putFile('/', $file);   
+            \Storage::delete($champ->photo);    
+            $champ->photo = $image_uploaded;     
+        }
+
+        $champ->save();
+
+        return response()->json($champ->with('type')->with('line')->orderBy('id','desc')->first());
     }
 
     public function destroy($id)
@@ -89,4 +96,6 @@ class TestController extends Controller
 
         return response()->json('ok');
     }
+
+
 }

@@ -33,7 +33,7 @@ class FormEdit extends Component {
          </div>
         <div className="form-group">
             <label className="control-label">Linea</label>
-            <select className="form-control" name="line" id="line" defaultValue={ this.props.data.champEdit.line_id }  onChange={ this.props.handleEdit.bind(this) }>
+            <select className="form-control" name="line_id" id="line" defaultValue={ this.props.data.champEdit.line_id }  onChange={ this.props.handleEdit.bind(this) }>
                 <option value="" disabled>Seleccione</option>
                 {
                     this.props.state.lines.map(line =>
@@ -44,7 +44,7 @@ class FormEdit extends Component {
         </div> 
         <div className="form-group">
             <label className="control-label">Tipo</label>
-            <select className="form-control" name="type" id="type" defaultValue={ this.props.data.champEdit.type_id }  onChange={ this.props.handleEdit.bind(this) }>
+            <select className="form-control" name="type_id" id="type" defaultValue={ this.props.data.champEdit.type_id }  onChange={ this.props.handleEdit.bind(this) }>
                 <option value="">Seleccione</option>
                 {
                     this.props.state.types.map(type =>

@@ -39,11 +39,18 @@ class Body extends Component {
     }
 
     updateChampList(champion,action){
+
         if(action === 'add'){
             this.state.champions.push(champion);
             this.setState({
                 champions: this.state.champions
             });            
+        }
+
+        if(action === 'update'){
+            this.setState({
+                champions: champion
+            });       
         }
 
         if(action === 'delete'){

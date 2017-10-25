@@ -71,38 +71,32 @@ class Table extends Component {
         if(e.target.name === 'update'){
             const value = e.target.value;
             let formDataUpdate = new FormData();
-          //  formDataUpdate.append('photo-upload',fileInput.files[0]);
+
+            formDataUpdate.append('id',value);
+            formDataUpdate.append('photo-upload',fileInput.files[0]);
             formDataUpdate.append('name',this.state.champEdit.name);
-            formDataUpdate.append('line',this.state.champEdit.line);
-            formDataUpdate.append('type',this.state.champEdit.type);
+            formDataUpdate.append('line',this.state.champEdit.line_id);
+            formDataUpdate.append('type',this.state.champEdit.type_id);
             formDataUpdate.append('date',this.state.champEdit.date);
             formDataUpdate.append('genre',this.state.champEdit.genre);
 
-            formDataUpdate.append('dato','jeje');
-            //const data = {datos: '123123'};
-            const data = new FormData();
-
-            data.append('action', 'ADD');
-            data.append('param', 0);
-            data.append('secondParam', 0);
-            data.append('file', new Blob(['test payload'], { type: 'text/csv' }));
-
-            axios.patch('test/1', data)
-/*
             axios({
-              method: 'put',
-              url: '/test/'+value,
+              method: 'post',
+              url: 'http://react.app/test/updateChamp/',
               data: formDataUpdate,
               headers: {'Content-Type': 'multipart/form-data'}
             })
             .then((response) => {
-                console.log(response.data);
+                let champions = this.props.data.champions.filter(champion =>
+                    champion.id !== parseInt(value)
+                );
+
+                champions.push(response.data);
+                this.props.updateChampList(champions,'update');
             })
             .catch(function (error) {
                 console.log(error.response.data.errors);
             });        
-        */
-
         }
 
         this.setState({
@@ -121,6 +115,7 @@ class Table extends Component {
         const target = event.target;
         const value = target.value;
         const name = target.name;
+        
         this.state.champEdit[[name]] = value;
         this.setState({
             champEdit: this.state.champEdit
