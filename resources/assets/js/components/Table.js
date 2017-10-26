@@ -56,12 +56,7 @@ class Table extends Component {
             axios.post('/test',formData,config)
             .then((response) => {
                 this.props.updateChampList(response.data,'add');
-                document.querySelector('#name').value = '';
-                document.querySelector('#line').value = '';
-                document.querySelector('#type').value = '';
-                document.querySelector('#date').value = '';
-                $("input:radio").attr("checked", false);
-                document.querySelector('#remove').click();
+                this.cleanModal();
             })
             .catch(function (error) {
                 console.log(error.response.data.errors);
@@ -87,21 +82,26 @@ class Table extends Component {
               headers: {'Content-Type': 'multipart/form-data'}
             })
             .then((response) => {
-                let champions = this.props.data.champions.filter(champion =>
-                    champion.id !== parseInt(value)
-                );
-
-                champions.push(response.data);
-                this.props.updateChampList(champions,'update');
+                this.props.updateChampList(response.data,'update');
+                this.cleanModal();
             })
             .catch(function (error) {
-                console.log(error.response.data.errors);
+                console.log(error);
             });        
         }
 
         this.setState({
                 modal: !this.state.modal
               });        
+    }
+
+    cleanModal(){
+        document.querySelector('#name').value = '';
+        document.querySelector('#line').value = '';
+        document.querySelector('#type').value = '';
+        document.querySelector('#date').value = '';
+        $("input:radio").attr("checked", false);
+        document.querySelector('#remove').click();
     }
 
     handleInput(event){

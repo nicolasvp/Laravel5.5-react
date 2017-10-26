@@ -21,6 +21,7 @@
         "react-dom": "^15.6.2"
     },
     "dependencies": {
+        "react-addons-update": "^15.6.2",
         "react-bootstrap": "^0.31.3",
         "reactstrap": "^5.0.0-alpha.3"
     }

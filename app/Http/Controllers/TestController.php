@@ -86,7 +86,7 @@ class TestController extends Controller
 
         $champ->save();
 
-        return response()->json($champ->with('type')->with('line')->orderBy('id','desc')->first());
+        return response()->json($champ->with('type')->with('line')->where('id',$request['id'])->first());
     }
 
     public function destroy($id)

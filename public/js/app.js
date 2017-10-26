@@ -59358,9 +59358,11 @@ var Footer = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Table__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_addons_update__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_addons_update___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_addons_update__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Table__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59368,6 +59370,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -59395,7 +59398,7 @@ var Body = function (_Component) {
         value: function _fetchData() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_2_axios___default()({
+            __WEBPACK_IMPORTED_MODULE_3_axios___default()({
                 method: 'get',
                 url: 'http://react.app/test',
                 responseType: 'json'
@@ -59427,9 +59430,27 @@ var Body = function (_Component) {
             }
 
             if (action === 'update') {
-                this.setState({
-                    champions: champion
+
+                var champions = this.state.champions.forEach(function (value, index) {
+                    if (value.id === champion.id) {
+                        //value = champion;
+                        console.log(value);
+                        //const asdf = update(value, {id: {$set: champion}});
+                        //console.log(asdf);
+                    }
                 });
+
+                console.log(this.state.champions);
+                //     const newObj2 = update(this.state.champions, {id: {$set: champion}});
+                //      console.log(newObj2);
+                /*
+                           console.log(champions);
+                           //champions.push(champion);            
+                           this.setState({
+                               champions: champions
+                           });
+                       */
+                // console.log(this.state.champions);
             }
 
             if (action === 'delete') {
@@ -59458,7 +59479,7 @@ var Body = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'col-md-12' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1__Table__["a" /* default */], { data: this.state, updateChampList: this.updateChampList })
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Table__["a" /* default */], { data: this.state, updateChampList: this.updateChampList })
                         )
                     )
                 )
@@ -59557,12 +59578,7 @@ var Table = function (_Component) {
 
                 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/test', formData, config).then(function (response) {
                     _this2.props.updateChampList(response.data, 'add');
-                    document.querySelector('#name').value = '';
-                    document.querySelector('#line').value = '';
-                    document.querySelector('#type').value = '';
-                    document.querySelector('#date').value = '';
-                    $("input:radio").attr("checked", false);
-                    document.querySelector('#remove').click();
+                    _this2.cleanModal();
                 }).catch(function (error) {
                     console.log(error.response.data.errors);
                 });
@@ -59586,20 +59602,26 @@ var Table = function (_Component) {
                     data: formDataUpdate,
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then(function (response) {
-                    var champions = _this2.props.data.champions.filter(function (champion) {
-                        return champion.id !== parseInt(value);
-                    });
-
-                    champions.push(response.data);
-                    _this2.props.updateChampList(champions, 'update');
+                    _this2.props.updateChampList(response.data, 'update');
+                    _this2.cleanModal();
                 }).catch(function (error) {
-                    console.log(error.response.data.errors);
+                    console.log(error);
                 });
             }
 
             this.setState({
                 modal: !this.state.modal
             });
+        }
+    }, {
+        key: 'cleanModal',
+        value: function cleanModal() {
+            document.querySelector('#name').value = '';
+            document.querySelector('#line').value = '';
+            document.querySelector('#type').value = '';
+            document.querySelector('#date').value = '';
+            $("input:radio").attr("checked", false);
+            document.querySelector('#remove').click();
         }
     }, {
         key: 'handleInput',
@@ -63775,6 +63797,186 @@ var FormEdit = function (_Component) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var _assign = __webpack_require__(3);
+var invariant = __webpack_require__(0);
+var hasOwnProperty = {}.hasOwnProperty;
+
+function shallowCopy(x) {
+  if (Array.isArray(x)) {
+    return x.concat();
+  } else if (x && typeof x === 'object') {
+    return _assign(new x.constructor(), x);
+  } else {
+    return x;
+  }
+}
+
+var COMMAND_PUSH = '$push';
+var COMMAND_UNSHIFT = '$unshift';
+var COMMAND_SPLICE = '$splice';
+var COMMAND_SET = '$set';
+var COMMAND_MERGE = '$merge';
+var COMMAND_APPLY = '$apply';
+
+var ALL_COMMANDS_LIST = [
+  COMMAND_PUSH,
+  COMMAND_UNSHIFT,
+  COMMAND_SPLICE,
+  COMMAND_SET,
+  COMMAND_MERGE,
+  COMMAND_APPLY
+];
+
+var ALL_COMMANDS_SET = {};
+
+ALL_COMMANDS_LIST.forEach(function(command) {
+  ALL_COMMANDS_SET[command] = true;
+});
+
+function invariantArrayCase(value, spec, command) {
+  invariant(
+    Array.isArray(value),
+    'update(): expected target of %s to be an array; got %s.',
+    command,
+    value
+  );
+  var specValue = spec[command];
+  invariant(
+    Array.isArray(specValue),
+    'update(): expected spec of %s to be an array; got %s. ' +
+      'Did you forget to wrap your parameter in an array?',
+    command,
+    specValue
+  );
+}
+
+/**
+ * Returns a updated shallow copy of an object without mutating the original.
+ * See https://facebook.github.io/react/docs/update.html for details.
+ */
+function update(value, spec) {
+  invariant(
+    typeof spec === 'object',
+    'update(): You provided a key path to update() that did not contain one ' +
+      'of %s. Did you forget to include {%s: ...}?',
+    ALL_COMMANDS_LIST.join(', '),
+    COMMAND_SET
+  );
+
+  if (hasOwnProperty.call(spec, COMMAND_SET)) {
+    invariant(
+      Object.keys(spec).length === 1,
+      'Cannot have more than one key in an object with %s',
+      COMMAND_SET
+    );
+
+    return spec[COMMAND_SET];
+  }
+
+  var nextValue = shallowCopy(value);
+
+  if (hasOwnProperty.call(spec, COMMAND_MERGE)) {
+    var mergeObj = spec[COMMAND_MERGE];
+    invariant(
+      mergeObj && typeof mergeObj === 'object',
+      "update(): %s expects a spec of type 'object'; got %s",
+      COMMAND_MERGE,
+      mergeObj
+    );
+    invariant(
+      nextValue && typeof nextValue === 'object',
+      "update(): %s expects a target of type 'object'; got %s",
+      COMMAND_MERGE,
+      nextValue
+    );
+    _assign(nextValue, spec[COMMAND_MERGE]);
+  }
+
+  if (hasOwnProperty.call(spec, COMMAND_PUSH)) {
+    invariantArrayCase(value, spec, COMMAND_PUSH);
+    spec[COMMAND_PUSH].forEach(function(item) {
+      nextValue.push(item);
+    });
+  }
+
+  if (hasOwnProperty.call(spec, COMMAND_UNSHIFT)) {
+    invariantArrayCase(value, spec, COMMAND_UNSHIFT);
+    spec[COMMAND_UNSHIFT].forEach(function(item) {
+      nextValue.unshift(item);
+    });
+  }
+
+  if (hasOwnProperty.call(spec, COMMAND_SPLICE)) {
+    invariant(
+      Array.isArray(value),
+      'Expected %s target to be an array; got %s',
+      COMMAND_SPLICE,
+      value
+    );
+    invariant(
+      Array.isArray(spec[COMMAND_SPLICE]),
+      'update(): expected spec of %s to be an array of arrays; got %s. ' +
+        'Did you forget to wrap your parameters in an array?',
+      COMMAND_SPLICE,
+      spec[COMMAND_SPLICE]
+    );
+    spec[COMMAND_SPLICE].forEach(function(args) {
+      invariant(
+        Array.isArray(args),
+        'update(): expected spec of %s to be an array of arrays; got %s. ' +
+          'Did you forget to wrap your parameters in an array?',
+        COMMAND_SPLICE,
+        spec[COMMAND_SPLICE]
+      );
+      nextValue.splice.apply(nextValue, args);
+    });
+  }
+
+  if (hasOwnProperty.call(spec, COMMAND_APPLY)) {
+    invariant(
+      typeof spec[COMMAND_APPLY] === 'function',
+      'update(): expected spec of %s to be a function; got %s.',
+      COMMAND_APPLY,
+      spec[COMMAND_APPLY]
+    );
+    nextValue = spec[COMMAND_APPLY](nextValue);
+  }
+
+  for (var k in spec) {
+    if (!(ALL_COMMANDS_SET.hasOwnProperty(k) && ALL_COMMANDS_SET[k])) {
+      nextValue[k] = update(value[k], spec[k]);
+    }
+  }
+
+  return nextValue;
+}
+
+module.exports = update;
+
 
 /***/ })
 /******/ ]);

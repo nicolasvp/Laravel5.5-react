@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import update from 'react-addons-update';
 import Table from './Table';
 import axios from 'axios';
 
@@ -48,9 +49,27 @@ class Body extends Component {
         }
 
         if(action === 'update'){
+
+            const champions = this.state.champions.forEach(function(value,index){
+                                    if(value.id === champion.id){
+                                        //value = champion;
+                                        console.log(value);
+                                        //const asdf = update(value, {id: {$set: champion}});
+                                        //console.log(asdf);
+                                    }
+                                });
+
+console.log(this.state.champions);
+       //     const newObj2 = update(this.state.champions, {id: {$set: champion}});
+      //      console.log(newObj2);
+ /*
+            console.log(champions);
+            //champions.push(champion);            
             this.setState({
-                champions: champion
-            });       
+                champions: champions
+            });
+        */
+       // console.log(this.state.champions);
         }
 
         if(action === 'delete'){
