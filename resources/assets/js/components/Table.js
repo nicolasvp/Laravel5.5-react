@@ -23,6 +23,14 @@ class Table extends Component {
                 date: '',
                 genre: '',
                 photo: ''                
+            },
+            errors: {
+                name: '',
+                line: '',
+                type: '',
+                date: '',
+                genre: '',
+                photo: ''                  
             }
 
         };
@@ -30,10 +38,12 @@ class Table extends Component {
         this.handleEdit = this.handleEdit.bind(this);
         this.handleDestroy = this.handleDestroy.bind(this);        
         this.handleClick = this.handleClick.bind(this);
-        this.cancelModal = this.cancelModal.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         this.sendForm = this.sendForm.bind(this);
+        this.showErrors = this.showErrors.bind(this);
     }
 
+    // Envia el formulario al controlador ya sea para guardar o para actualizar
     sendForm(e){
         e.preventDefault();
 
@@ -43,10 +53,11 @@ class Table extends Component {
             headers: { 'content-type': 'multipart/form-data' }
         }
         
+        // Envia los valores del formulario para guardar el nuevo registro
         if(e.target.name === 'store'){
 
             let formData = new FormData();
-            formData.append('photo-upload',fileInput.files[0]);
+            formData.append('photo',fileInput.files[0]);
             formData.append('name',this.state.newChamp.name);
             formData.append('line',this.state.newChamp.line);
             formData.append('type',this.state.newChamp.type);
@@ -56,13 +67,15 @@ class Table extends Component {
             axios.post('/test',formData,config)
             .then((response) => {
                 this.props.updateChampList(response.data,'add');
-                this.cleanModal();
+                this.closeModal();
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error.response.data.errors);
+                this.showErrors(error.response.data.errors);         
             });           
         }
 
+        // Envia los valores del formulario para actualizar el registro
         if(e.target.name === 'update'){
             const value = e.target.value;
             let formDataUpdate = new FormData();
@@ -83,45 +96,60 @@ class Table extends Component {
             })
             .then((response) => {
                 this.props.updateChampList(response.data,'update');
-                this.cleanModal();
+                this.closeModal();
             })
             .catch(function (error) {
                 console.log(error);
             });        
-        }
+        }       
+    }
 
+    showErrors(errors)
+    {
         this.setState({
-                modal: !this.state.modal
-              });        
+            errors: {
+                name: errors.name,
+                line: errors.line,
+                type: errors.type,
+                genre: errors.genre,
+                date: errors.date,
+                photo: errors.photo 
+            }
+        });
     }
 
-    cleanModal(){
-        document.querySelector('#name').value = '';
-        document.querySelector('#line').value = '';
-        document.querySelector('#type').value = '';
-        document.querySelector('#date').value = '';
-        $("input:radio").attr("checked", false);
-        document.querySelector('#remove').click();
-    }
-
+    // Toma los valores del modal cuando se está creando y actualiza el valor del state
     handleInput(event){
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        this.state.newChamp[[name]] = value;
+
+        if(value !== '')
+        {
+            this.state.newChamp[[name]] = value;
+            this.state.errors[[name]] = '';
+            this.setState({
+                errors: this.state.errors
+            });
+        }
     }
 
+    // Toma los valores del modal cuando se está editando y actualiza el valor del state
     handleEdit(event){
         const target = event.target;
         const value = target.value;
         const name = target.name;
-        
-        this.state.champEdit[[name]] = value;
-        this.setState({
-            champEdit: this.state.champEdit
-        });
+
+        if(value !== '')
+        {
+            this.state.champEdit[[name]] = value;
+            this.setState({
+                champEdit: this.state.champEdit
+            });           
+        }
     }
 
+    // Elimina el registro y luego actualiza el state
     handleDestroy(event){
         event.preventDefault();
         const value = event.target.value;
@@ -139,14 +167,11 @@ class Table extends Component {
         
     }
 
+    // Abre el modal para editar 
     handleClick(event) {
         const name = event.target.name
         const value = event.target.value;
-
-        if(name === 'add'){
-
-        }
-
+        this.closeModal();
         if(name === 'edit'){  
 
             axios.get('/test/'+value+'/edit')
@@ -160,13 +185,15 @@ class Table extends Component {
             });           
         }
 
+        // Cierra el modal
         this.setState({
           modal: !this.state.modal
         });
 
     }
 
-    cancelModal(){
+    // Boton Cancelar del modal, lo cierra y limpia
+    closeModal(){
       this.setState({
         modal: !this.state.modal,
         champEdit: {
@@ -176,7 +203,15 @@ class Table extends Component {
                 date: '',
                 genre: '',
                 photo: ''                
-             }
+             },
+            errors: {
+                name: '',
+                line: '',
+                type: '',
+                genre: '',
+                date: '',
+                photo: ''
+            }             
       });
     }
 
@@ -230,7 +265,7 @@ class Table extends Component {
                                 handleInput={ this.handleInput } 
                                 handleEdit={ this.handleEdit }
                                 sendForm={ this.sendForm } 
-                                cancelModal={ this.cancelModal }
+                                closeModal={ this.closeModal }
                             />  
                         </div>
                     </div>

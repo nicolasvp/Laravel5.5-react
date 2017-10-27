@@ -11,6 +11,7 @@ class FormEdit extends Component {
         };
    }
 
+  // Antes que se monte el componente convierte el formato de la fecha 
   componentWillMount(){
     const only_date = this.props.data.champEdit.date.split(" ")[0];
     const date_splited = only_date.split("-");

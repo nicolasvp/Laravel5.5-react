@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 class FormAdd extends Component {
+
+    constructor(props){
+        super(props);
+    }
 
   render(){
   return(
@@ -14,6 +18,7 @@ class FormAdd extends Component {
                <div className="input-group-addon"><i className="ti-user"></i></div>
                 <input ref="name" type="text" className="form-control" id="name" name="name" placeholder="Nombre" onChange={ this.props.handleInput.bind(this) }></input>
             </div>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.errors.name }</span>
          </div>
         <div className="form-group">
             <label className="control-label">Linea</label>
@@ -25,6 +30,7 @@ class FormAdd extends Component {
                     )
                 }
             </select>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.errors.line }</span>
         </div> 
         <div className="form-group">
             <label className="control-label">Tipo</label>
@@ -36,6 +42,7 @@ class FormAdd extends Component {
                     )
                 }
             </select>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.errors.type }</span>
         </div>  
         <div className="form-group">
             <label className="control-label">Género</label>
@@ -53,14 +60,13 @@ class FormAdd extends Component {
                     </div>
                 </label>
             </div>
-        </div>
-        <div className="form-group">
-            <label className="control-label">Fecha de creación</label>
-            <div className="input-group">
-              <input type="text" name="date" id="date" className="form-control mydatepicker" placeholder="mm/dd/yyyy" onChange={ this.props.handleInput.bind(this) }></input>
-            <span className="input-group-addon"><i className="icon-calender"></i></span>
-            </div>
-        </div>  
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.errors.genre }</span>
+        </div> 
+        <FormGroup>
+          <Label for="date">Date</Label>
+          <Input type="date" name="date" id="date" placeholder="date placeholder" min="1979-12-31" max="2020-01-02" onChange={ this.props.handleInput.bind(this) }/>
+          <span className="help-block" style={{ color: 'red' }}>{ this.props.errors.date }</span>
+        </FormGroup>        
 		<div className="form-group">
 			<label className="control-label">Subir Imagen</label>
 		    <div className="fileinput fileinput-new input-group" data-provides="fileinput">
@@ -75,6 +81,7 @@ class FormAdd extends Component {
 		        </span>
 		        <a href="#" className="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput" id="remove">Eliminar</a>
 		    </div>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.errors.photo }</span>
 		</div>                                                        
       </form> 
     </div>

@@ -14,6 +14,7 @@ class ModalComponent extends Component {
     }; 
   }
 
+  // Trae la información de las lineas y tipos para listarlos en el modal
   _fetchData(){
       axios({
           method:'get',
@@ -44,18 +45,19 @@ class ModalComponent extends Component {
   render(){
     let form = null;
     let button = null;
+    // Muestra un formulario dependiendo si se creará o editará
     if(this.props.data.champEdit.name){
       form = <FormEdit data={ this.props.data } state={ this.state } handleEdit={ this.props.handleEdit }/>;
       button = <Button color="primary" name="update" value={ this.props.data.champEdit.id } onClick={ this.props.sendForm.bind(this) }>Aceptar</Button>;
     }
     else{
-      form = <FormAdd data={ this.state } handleInput={ this.props.handleInput }/>;
+      form = <FormAdd data={ this.state } errors={ this.props.data.errors } handleInput={ this.props.handleInput }/>;
       button = <Button color="primary" name="store" onClick={ this.props.sendForm.bind(this) }>Aceptar</Button>;
     }
     return(
       <div>
-         <Modal isOpen={ this.props.data.modal } toggle={ this.props.cancelModal } className={ this.props.className }>
-         <ModalHeader toggle={ this.props.cancelModal }> 
+         <Modal isOpen={ this.props.data.modal } toggle={ this.props.closeModal } className={ this.props.className }>
+         <ModalHeader toggle={ this.props.closeModal }> 
           { this.props.data.champEdit.name ? 'Editar campeón' : 'Nuevo campeón'}
          </ModalHeader>
          <ModalBody>
@@ -63,7 +65,7 @@ class ModalComponent extends Component {
          </ModalBody>
          <ModalFooter>
             { button }
-            <Button color="secondary" onClick={ this.props.cancelModal }>Cancelar</Button>
+            <Button color="secondary" onClick={ this.props.closeModal }>Cancelar</Button>
          </ModalFooter>
          </Modal>              
       </div>

@@ -14,8 +14,8 @@
 Route::get('/', function () {
     return view('test-react');
 });
-Route::resource('/test','TestController')->only(['index','store','show','edit','destroy']);
-Route::post('/test/updateChamp','TestController@updateChamp');
+Route::resource('/test','ChampionController')->only(['index','store','show','edit','destroy']);
+Route::post('/test/updateChamp','ChampionController@updateChamp');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

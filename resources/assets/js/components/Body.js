@@ -8,13 +8,12 @@ class Body extends Component {
     constructor(props){
         super(props);
         this.state = {
-            phrases: [],
-            name: '',
             champions: []
         };
         this.updateChampList = this.updateChampList.bind(this);
     }
 
+    // Trae todos los campeones de la bdd y actualiza el state
     _fetchData(){
         axios({
             method:'get',
@@ -39,6 +38,7 @@ class Body extends Component {
         this._fetchData();
     }
 
+    // Actualiza la lista de campeones cuando se crea, edita o elimina
     updateChampList(champion,action){
 
         if(action === 'add'){
@@ -49,27 +49,17 @@ class Body extends Component {
         }
 
         if(action === 'update'){
-
+            // Busca el champion y lo reemplaza por el actualizado
+            const champ_list = this.state.champions;
             const champions = this.state.champions.forEach(function(value,index){
                                     if(value.id === champion.id){
-                                        //value = champion;
-                                        console.log(value);
-                                        //const asdf = update(value, {id: {$set: champion}});
-                                        //console.log(asdf);
+                                        champ_list[index] = champion;
                                     }
                                 });
-
-console.log(this.state.champions);
-       //     const newObj2 = update(this.state.champions, {id: {$set: champion}});
-      //      console.log(newObj2);
- /*
-            console.log(champions);
-            //champions.push(champion);            
             this.setState({
-                champions: champions
+                champions: champ_list
             });
-        */
-       // console.log(this.state.champions);
+
         }
 
         if(action === 'delete'){

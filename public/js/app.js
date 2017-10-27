@@ -5011,10 +5011,10 @@ module.exports = ReactBrowserEventEmitter;
 /* unused harmony export PopoverTitle */
 /* unused harmony export PopoverHeader */
 /* unused harmony export Progress */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Modal; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return ModalHeader; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ModalBody; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return ModalFooter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return Modal; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return ModalHeader; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return ModalBody; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return ModalFooter; });
 /* unused harmony export PopperContent */
 /* unused harmony export PopperTargetHelper */
 /* unused harmony export Tooltip */
@@ -5022,13 +5022,13 @@ module.exports = ReactBrowserEventEmitter;
 /* unused harmony export ListGroup */
 /* unused harmony export Form */
 /* unused harmony export FormFeedback */
-/* unused harmony export FormGroup */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return FormGroup; });
 /* unused harmony export FormText */
-/* unused harmony export Input */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Input; });
 /* unused harmony export InputGroup */
 /* unused harmony export InputGroupAddon */
 /* unused harmony export InputGroupButton */
-/* unused harmony export Label */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Label; });
 /* unused harmony export Media */
 /* unused harmony export Pagination */
 /* unused harmony export PaginationItem */
@@ -5049,17 +5049,17 @@ module.exports = ReactBrowserEventEmitter;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames__ = __webpack_require__(225);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_classnames__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_isfunction__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_isfunction__ = __webpack_require__(226);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash_isfunction___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash_isfunction__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_isobject__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_isobject__ = __webpack_require__(227);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_lodash_isobject___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_lodash_isobject__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react_dom__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_popper__ = __webpack_require__(227);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_popper__ = __webpack_require__(228);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_react_popper___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_react_popper__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_tonumber__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_tonumber__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_lodash_tonumber___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7_lodash_tonumber__);
 
 
@@ -16316,7 +16316,7 @@ module.exports = getHostComponentFromComposite;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(96);
-module.exports = __webpack_require__(237);
+module.exports = __webpack_require__(238);
 
 
 /***/ }),
@@ -59358,9 +59358,9 @@ var Footer = function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_addons_update__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_addons_update__ = __webpack_require__(223);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_addons_update___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_addons_update__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Table__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Table__ = __webpack_require__(224);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -59385,13 +59385,14 @@ var Body = function (_Component) {
         var _this = _possibleConstructorReturn(this, (Body.__proto__ || Object.getPrototypeOf(Body)).call(this, props));
 
         _this.state = {
-            phrases: [],
-            name: '',
             champions: []
         };
         _this.updateChampList = _this.updateChampList.bind(_this);
         return _this;
     }
+
+    // Trae todos los campeones de la bdd y actualiza el state
+
 
     _createClass(Body, [{
         key: '_fetchData',
@@ -59418,6 +59419,9 @@ var Body = function (_Component) {
         value: function componentDidMount() {
             this._fetchData();
         }
+
+        // Actualiza la lista de campeones cuando se crea, edita o elimina
+
     }, {
         key: 'updateChampList',
         value: function updateChampList(champion, action) {
@@ -59430,27 +59434,16 @@ var Body = function (_Component) {
             }
 
             if (action === 'update') {
-
+                // Busca el champion y lo reemplaza por el actualizado
+                var champ_list = this.state.champions;
                 var champions = this.state.champions.forEach(function (value, index) {
                     if (value.id === champion.id) {
-                        //value = champion;
-                        console.log(value);
-                        //const asdf = update(value, {id: {$set: champion}});
-                        //console.log(asdf);
+                        champ_list[index] = champion;
                     }
                 });
-
-                console.log(this.state.champions);
-                //     const newObj2 = update(this.state.champions, {id: {$set: champion}});
-                //      console.log(newObj2);
-                /*
-                           console.log(champions);
-                           //champions.push(champion);            
-                           this.setState({
-                               champions: champions
-                           });
-                       */
-                // console.log(this.state.champions);
+                this.setState({
+                    champions: champ_list
+                });
             }
 
             if (action === 'delete') {
@@ -59494,6 +59487,177 @@ var Body = function (_Component) {
 
 /***/ }),
 /* 223 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var _assign = __webpack_require__(3);
+var invariant = __webpack_require__(0);
+var hasOwnProperty = {}.hasOwnProperty;
+
+function shallowCopy(x) {
+  if (Array.isArray(x)) {
+    return x.concat();
+  } else if (x && typeof x === 'object') {
+    return _assign(new x.constructor(), x);
+  } else {
+    return x;
+  }
+}
+
+var COMMAND_PUSH = '$push';
+var COMMAND_UNSHIFT = '$unshift';
+var COMMAND_SPLICE = '$splice';
+var COMMAND_SET = '$set';
+var COMMAND_MERGE = '$merge';
+var COMMAND_APPLY = '$apply';
+
+var ALL_COMMANDS_LIST = [
+  COMMAND_PUSH,
+  COMMAND_UNSHIFT,
+  COMMAND_SPLICE,
+  COMMAND_SET,
+  COMMAND_MERGE,
+  COMMAND_APPLY
+];
+
+var ALL_COMMANDS_SET = {};
+
+ALL_COMMANDS_LIST.forEach(function(command) {
+  ALL_COMMANDS_SET[command] = true;
+});
+
+function invariantArrayCase(value, spec, command) {
+  invariant(
+    Array.isArray(value),
+    'update(): expected target of %s to be an array; got %s.',
+    command,
+    value
+  );
+  var specValue = spec[command];
+  invariant(
+    Array.isArray(specValue),
+    'update(): expected spec of %s to be an array; got %s. ' +
+      'Did you forget to wrap your parameter in an array?',
+    command,
+    specValue
+  );
+}
+
+/**
+ * Returns a updated shallow copy of an object without mutating the original.
+ * See https://facebook.github.io/react/docs/update.html for details.
+ */
+function update(value, spec) {
+  invariant(
+    typeof spec === 'object',
+    'update(): You provided a key path to update() that did not contain one ' +
+      'of %s. Did you forget to include {%s: ...}?',
+    ALL_COMMANDS_LIST.join(', '),
+    COMMAND_SET
+  );
+
+  if (hasOwnProperty.call(spec, COMMAND_SET)) {
+    invariant(
+      Object.keys(spec).length === 1,
+      'Cannot have more than one key in an object with %s',
+      COMMAND_SET
+    );
+
+    return spec[COMMAND_SET];
+  }
+
+  var nextValue = shallowCopy(value);
+
+  if (hasOwnProperty.call(spec, COMMAND_MERGE)) {
+    var mergeObj = spec[COMMAND_MERGE];
+    invariant(
+      mergeObj && typeof mergeObj === 'object',
+      "update(): %s expects a spec of type 'object'; got %s",
+      COMMAND_MERGE,
+      mergeObj
+    );
+    invariant(
+      nextValue && typeof nextValue === 'object',
+      "update(): %s expects a target of type 'object'; got %s",
+      COMMAND_MERGE,
+      nextValue
+    );
+    _assign(nextValue, spec[COMMAND_MERGE]);
+  }
+
+  if (hasOwnProperty.call(spec, COMMAND_PUSH)) {
+    invariantArrayCase(value, spec, COMMAND_PUSH);
+    spec[COMMAND_PUSH].forEach(function(item) {
+      nextValue.push(item);
+    });
+  }
+
+  if (hasOwnProperty.call(spec, COMMAND_UNSHIFT)) {
+    invariantArrayCase(value, spec, COMMAND_UNSHIFT);
+    spec[COMMAND_UNSHIFT].forEach(function(item) {
+      nextValue.unshift(item);
+    });
+  }
+
+  if (hasOwnProperty.call(spec, COMMAND_SPLICE)) {
+    invariant(
+      Array.isArray(value),
+      'Expected %s target to be an array; got %s',
+      COMMAND_SPLICE,
+      value
+    );
+    invariant(
+      Array.isArray(spec[COMMAND_SPLICE]),
+      'update(): expected spec of %s to be an array of arrays; got %s. ' +
+        'Did you forget to wrap your parameters in an array?',
+      COMMAND_SPLICE,
+      spec[COMMAND_SPLICE]
+    );
+    spec[COMMAND_SPLICE].forEach(function(args) {
+      invariant(
+        Array.isArray(args),
+        'update(): expected spec of %s to be an array of arrays; got %s. ' +
+          'Did you forget to wrap your parameters in an array?',
+        COMMAND_SPLICE,
+        spec[COMMAND_SPLICE]
+      );
+      nextValue.splice.apply(nextValue, args);
+    });
+  }
+
+  if (hasOwnProperty.call(spec, COMMAND_APPLY)) {
+    invariant(
+      typeof spec[COMMAND_APPLY] === 'function',
+      'update(): expected spec of %s to be a function; got %s.',
+      COMMAND_APPLY,
+      spec[COMMAND_APPLY]
+    );
+    nextValue = spec[COMMAND_APPLY](nextValue);
+  }
+
+  for (var k in spec) {
+    if (!(ALL_COMMANDS_SET.hasOwnProperty(k) && ALL_COMMANDS_SET[k])) {
+      nextValue[k] = update(value[k], spec[k]);
+    }
+  }
+
+  return nextValue;
+}
+
+module.exports = update;
+
+
+/***/ }),
+/* 224 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -59502,7 +59666,7 @@ var Body = function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_reactstrap__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Modal__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Modal__ = __webpack_require__(235);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -59541,6 +59705,14 @@ var Table = function (_Component) {
                 date: '',
                 genre: '',
                 photo: ''
+            },
+            errors: {
+                name: '',
+                line: '',
+                type: '',
+                date: '',
+                genre: '',
+                photo: ''
             }
 
         };
@@ -59548,10 +59720,14 @@ var Table = function (_Component) {
         _this.handleEdit = _this.handleEdit.bind(_this);
         _this.handleDestroy = _this.handleDestroy.bind(_this);
         _this.handleClick = _this.handleClick.bind(_this);
-        _this.cancelModal = _this.cancelModal.bind(_this);
+        _this.closeModal = _this.closeModal.bind(_this);
         _this.sendForm = _this.sendForm.bind(_this);
+        _this.showErrors = _this.showErrors.bind(_this);
         return _this;
     }
+
+    // Envia el formulario al controlador ya sea para guardar o para actualizar
+
 
     _createClass(Table, [{
         key: 'sendForm',
@@ -59564,12 +59740,12 @@ var Table = function (_Component) {
 
             var config = {
                 headers: { 'content-type': 'multipart/form-data' }
-            };
 
-            if (e.target.name === 'store') {
+                // Envia los valores del formulario para guardar el nuevo registro
+            };if (e.target.name === 'store') {
 
                 var formData = new FormData();
-                formData.append('photo-upload', fileInput.files[0]);
+                formData.append('photo', fileInput.files[0]);
                 formData.append('name', this.state.newChamp.name);
                 formData.append('line', this.state.newChamp.line);
                 formData.append('type', this.state.newChamp.type);
@@ -59578,12 +59754,14 @@ var Table = function (_Component) {
 
                 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/test', formData, config).then(function (response) {
                     _this2.props.updateChampList(response.data, 'add');
-                    _this2.cleanModal();
+                    _this2.closeModal();
                 }).catch(function (error) {
                     console.log(error.response.data.errors);
+                    _this2.showErrors(error.response.data.errors);
                 });
             }
 
+            // Envia los valores del formulario para actualizar el registro
             if (e.target.name === 'update') {
                 var value = e.target.value;
                 var formDataUpdate = new FormData();
@@ -59603,34 +59781,47 @@ var Table = function (_Component) {
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then(function (response) {
                     _this2.props.updateChampList(response.data, 'update');
-                    _this2.cleanModal();
+                    _this2.closeModal();
                 }).catch(function (error) {
                     console.log(error);
                 });
             }
-
-            this.setState({
-                modal: !this.state.modal
-            });
         }
     }, {
-        key: 'cleanModal',
-        value: function cleanModal() {
-            document.querySelector('#name').value = '';
-            document.querySelector('#line').value = '';
-            document.querySelector('#type').value = '';
-            document.querySelector('#date').value = '';
-            $("input:radio").attr("checked", false);
-            document.querySelector('#remove').click();
+        key: 'showErrors',
+        value: function showErrors(errors) {
+            this.setState({
+                errors: {
+                    name: errors.name,
+                    line: errors.line,
+                    type: errors.type,
+                    genre: errors.genre,
+                    date: errors.date,
+                    photo: errors.photo
+                }
+            });
         }
+
+        // Toma los valores del modal cuando se está creando y actualiza el valor del state
+
     }, {
         key: 'handleInput',
         value: function handleInput(event) {
             var target = event.target;
             var value = target.value;
             var name = target.name;
-            this.state.newChamp[[name]] = value;
+
+            if (value !== '') {
+                this.state.newChamp[[name]] = value;
+                this.state.errors[[name]] = '';
+                this.setState({
+                    errors: this.state.errors
+                });
+            }
         }
+
+        // Toma los valores del modal cuando se está editando y actualiza el valor del state
+
     }, {
         key: 'handleEdit',
         value: function handleEdit(event) {
@@ -59638,11 +59829,16 @@ var Table = function (_Component) {
             var value = target.value;
             var name = target.name;
 
-            this.state.champEdit[[name]] = value;
-            this.setState({
-                champEdit: this.state.champEdit
-            });
+            if (value !== '') {
+                this.state.champEdit[[name]] = value;
+                this.setState({
+                    champEdit: this.state.champEdit
+                });
+            }
         }
+
+        // Elimina el registro y luego actualiza el state
+
     }, {
         key: 'handleDestroy',
         value: function handleDestroy(event) {
@@ -59660,6 +59856,9 @@ var Table = function (_Component) {
                 console.log(error);
             });
         }
+
+        // Abre el modal para editar 
+
     }, {
         key: 'handleClick',
         value: function handleClick(event) {
@@ -59667,9 +59866,7 @@ var Table = function (_Component) {
 
             var name = event.target.name;
             var value = event.target.value;
-
-            if (name === 'add') {}
-
+            this.closeModal();
             if (name === 'edit') {
 
                 __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/test/' + value + '/edit').then(function (response) {
@@ -59681,13 +59878,17 @@ var Table = function (_Component) {
                 });
             }
 
+            // Cierra el modal
             this.setState({
                 modal: !this.state.modal
             });
         }
+
+        // Boton Cancelar del modal, lo cierra y limpia
+
     }, {
-        key: 'cancelModal',
-        value: function cancelModal() {
+        key: 'closeModal',
+        value: function closeModal() {
             this.setState({
                 modal: !this.state.modal,
                 champEdit: {
@@ -59696,6 +59897,14 @@ var Table = function (_Component) {
                     type: '',
                     date: '',
                     genre: '',
+                    photo: ''
+                },
+                errors: {
+                    name: '',
+                    line: '',
+                    type: '',
+                    genre: '',
+                    date: '',
                     photo: ''
                 }
             });
@@ -59853,7 +60062,7 @@ var Table = function (_Component) {
                                 handleInput: this.handleInput,
                                 handleEdit: this.handleEdit,
                                 sendForm: this.sendForm,
-                                cancelModal: this.cancelModal
+                                closeModal: this.closeModal
                             })
                         )
                     )
@@ -59868,7 +60077,7 @@ var Table = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (Table);
 
 /***/ }),
-/* 224 */
+/* 225 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -59923,7 +60132,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 225 */
+/* 226 */
 /***/ (function(module, exports) {
 
 /**
@@ -60004,7 +60213,7 @@ module.exports = isFunction;
 
 
 /***/ }),
-/* 226 */
+/* 227 */
 /***/ (function(module, exports) {
 
 /**
@@ -60047,7 +60256,7 @@ module.exports = isObject;
 
 
 /***/ }),
-/* 227 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60058,19 +60267,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Arrow = exports.Popper = exports.Target = exports.Manager = undefined;
 
-var _Manager2 = __webpack_require__(228);
+var _Manager2 = __webpack_require__(229);
 
 var _Manager3 = _interopRequireDefault(_Manager2);
 
-var _Target2 = __webpack_require__(229);
+var _Target2 = __webpack_require__(230);
 
 var _Target3 = _interopRequireDefault(_Target2);
 
-var _Popper2 = __webpack_require__(230);
+var _Popper2 = __webpack_require__(231);
 
 var _Popper3 = _interopRequireDefault(_Popper2);
 
-var _Arrow2 = __webpack_require__(232);
+var _Arrow2 = __webpack_require__(233);
 
 var _Arrow3 = _interopRequireDefault(_Arrow2);
 
@@ -60082,7 +60291,7 @@ exports.Popper = _Popper3.default;
 exports.Arrow = _Arrow3.default;
 
 /***/ }),
-/* 228 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60174,7 +60383,7 @@ Manager.defaultProps = {
 exports.default = Manager;
 
 /***/ }),
-/* 229 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60243,7 +60452,7 @@ Target.propTypes = {
 exports.default = Target;
 
 /***/ }),
-/* 230 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -60265,7 +60474,7 @@ var _propTypes = __webpack_require__(27);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _popper = __webpack_require__(231);
+var _popper = __webpack_require__(232);
 
 var _popper2 = _interopRequireDefault(_popper);
 
@@ -60516,7 +60725,7 @@ Popper.defaultProps = {
 exports.default = Popper;
 
 /***/ }),
-/* 231 */
+/* 232 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62965,7 +63174,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(55)))
 
 /***/ }),
-/* 232 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -63040,7 +63249,7 @@ Arrow.propTypes = {
 exports.default = Arrow;
 
 /***/ }),
-/* 233 */
+/* 234 */
 /***/ (function(module, exports) {
 
 /**
@@ -63211,7 +63420,7 @@ module.exports = toNumber;
 
 
 /***/ }),
-/* 234 */
+/* 235 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63220,8 +63429,8 @@ module.exports = toNumber;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_reactstrap__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FormAdd__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormEdit__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FormAdd__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormEdit__ = __webpack_require__(237);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63250,6 +63459,9 @@ var ModalComponent = function (_Component) {
     };
     return _this;
   }
+
+  // Trae la información de las lineas y tipos para listarlos en el modal
+
 
   _createClass(ModalComponent, [{
     key: '_fetchData',
@@ -63285,6 +63497,7 @@ var ModalComponent = function (_Component) {
     value: function render() {
       var form = null;
       var button = null;
+      // Muestra un formulario dependiendo si se creará o editará
       if (this.props.data.champEdit.name) {
         form = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__FormEdit__["a" /* default */], { data: this.props.data, state: this.state, handleEdit: this.props.handleEdit });
         button = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63293,7 +63506,7 @@ var ModalComponent = function (_Component) {
           'Aceptar'
         );
       } else {
-        form = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FormAdd__["a" /* default */], { data: this.state, handleInput: this.props.handleInput });
+        form = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FormAdd__["a" /* default */], { data: this.state, errors: this.props.data.errors, handleInput: this.props.handleInput });
         button = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
           { color: 'primary', name: 'store', onClick: this.props.sendForm.bind(this) },
@@ -63304,25 +63517,25 @@ var ModalComponent = function (_Component) {
         'div',
         null,
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_2_reactstrap__["b" /* Modal */],
-          { isOpen: this.props.data.modal, toggle: this.props.cancelModal, className: this.props.className },
+          __WEBPACK_IMPORTED_MODULE_2_reactstrap__["e" /* Modal */],
+          { isOpen: this.props.data.modal, toggle: this.props.closeModal, className: this.props.className },
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["e" /* ModalHeader */],
-            { toggle: this.props.cancelModal },
+            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["h" /* ModalHeader */],
+            { toggle: this.props.closeModal },
             this.props.data.champEdit.name ? 'Editar campeón' : 'Nuevo campeón'
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["c" /* ModalBody */],
+            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["f" /* ModalBody */],
             null,
             form
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["d" /* ModalFooter */],
+            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["g" /* ModalFooter */],
             null,
             button,
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
               __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
-              { color: 'secondary', onClick: this.props.cancelModal },
+              { color: 'secondary', onClick: this.props.closeModal },
               'Cancelar'
             )
           )
@@ -63337,7 +63550,7 @@ var ModalComponent = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (ModalComponent);
 
 /***/ }),
-/* 235 */
+/* 236 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63361,10 +63574,10 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var FormAdd = function (_Component) {
     _inherits(FormAdd, _Component);
 
-    function FormAdd() {
+    function FormAdd(props) {
         _classCallCheck(this, FormAdd);
 
-        return _possibleConstructorReturn(this, (FormAdd.__proto__ || Object.getPrototypeOf(FormAdd)).apply(this, arguments));
+        return _possibleConstructorReturn(this, (FormAdd.__proto__ || Object.getPrototypeOf(FormAdd)).call(this, props));
     }
 
     _createClass(FormAdd, [{
@@ -63393,6 +63606,11 @@ var FormAdd = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'ti-user' })
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: 'name', type: 'text', className: 'form-control', id: 'name', name: 'name', placeholder: 'Nombre', onChange: this.props.handleInput.bind(this) })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.errors.name
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63418,6 +63636,11 @@ var FormAdd = function (_Component) {
                                     line.name
                                 );
                             })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.errors.line
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63443,6 +63666,11 @@ var FormAdd = function (_Component) {
                                     type.name
                                 );
                             })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.errors.type
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63484,25 +63712,26 @@ var FormAdd = function (_Component) {
                                     )
                                 )
                             )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.errors.genre
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_2_reactstrap__["b" /* FormGroup */],
+                        null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { className: 'control-label' },
-                            'Fecha de creaci\xF3n'
+                            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["d" /* Label */],
+                            { 'for': 'date' },
+                            'Date'
                         ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_reactstrap__["c" /* Input */], { type: 'date', name: 'date', id: 'date', placeholder: 'date placeholder', min: '1979-12-31', max: '2020-01-02', onChange: this.props.handleInput.bind(this) }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'input-group' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'date', id: 'date', className: 'form-control mydatepicker', placeholder: 'mm/dd/yyyy', onChange: this.props.handleInput.bind(this) }),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'span',
-                                { className: 'input-group-addon' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'icon-calender' })
-                            )
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.errors.date
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63542,6 +63771,11 @@ var FormAdd = function (_Component) {
                                 { href: '#', className: 'input-group-addon btn btn-default fileinput-exists', 'data-dismiss': 'fileinput', id: 'remove' },
                                 'Eliminar'
                             )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.errors.photo
                         )
                     )
                 )
@@ -63555,7 +63789,7 @@ var FormAdd = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (FormAdd);
 
 /***/ }),
-/* 236 */
+/* 237 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -63589,6 +63823,9 @@ var FormEdit = function (_Component) {
         };
         return _this;
     }
+
+    // Antes que se monte el componente convierte el formato de la fecha 
+
 
     _createClass(FormEdit, [{
         key: 'componentWillMount',
@@ -63793,190 +64030,10 @@ var FormEdit = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (FormEdit);
 
 /***/ }),
-/* 237 */
+/* 238 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 238 */,
-/* 239 */,
-/* 240 */,
-/* 241 */,
-/* 242 */,
-/* 243 */,
-/* 244 */,
-/* 245 */,
-/* 246 */,
-/* 247 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var _assign = __webpack_require__(3);
-var invariant = __webpack_require__(0);
-var hasOwnProperty = {}.hasOwnProperty;
-
-function shallowCopy(x) {
-  if (Array.isArray(x)) {
-    return x.concat();
-  } else if (x && typeof x === 'object') {
-    return _assign(new x.constructor(), x);
-  } else {
-    return x;
-  }
-}
-
-var COMMAND_PUSH = '$push';
-var COMMAND_UNSHIFT = '$unshift';
-var COMMAND_SPLICE = '$splice';
-var COMMAND_SET = '$set';
-var COMMAND_MERGE = '$merge';
-var COMMAND_APPLY = '$apply';
-
-var ALL_COMMANDS_LIST = [
-  COMMAND_PUSH,
-  COMMAND_UNSHIFT,
-  COMMAND_SPLICE,
-  COMMAND_SET,
-  COMMAND_MERGE,
-  COMMAND_APPLY
-];
-
-var ALL_COMMANDS_SET = {};
-
-ALL_COMMANDS_LIST.forEach(function(command) {
-  ALL_COMMANDS_SET[command] = true;
-});
-
-function invariantArrayCase(value, spec, command) {
-  invariant(
-    Array.isArray(value),
-    'update(): expected target of %s to be an array; got %s.',
-    command,
-    value
-  );
-  var specValue = spec[command];
-  invariant(
-    Array.isArray(specValue),
-    'update(): expected spec of %s to be an array; got %s. ' +
-      'Did you forget to wrap your parameter in an array?',
-    command,
-    specValue
-  );
-}
-
-/**
- * Returns a updated shallow copy of an object without mutating the original.
- * See https://facebook.github.io/react/docs/update.html for details.
- */
-function update(value, spec) {
-  invariant(
-    typeof spec === 'object',
-    'update(): You provided a key path to update() that did not contain one ' +
-      'of %s. Did you forget to include {%s: ...}?',
-    ALL_COMMANDS_LIST.join(', '),
-    COMMAND_SET
-  );
-
-  if (hasOwnProperty.call(spec, COMMAND_SET)) {
-    invariant(
-      Object.keys(spec).length === 1,
-      'Cannot have more than one key in an object with %s',
-      COMMAND_SET
-    );
-
-    return spec[COMMAND_SET];
-  }
-
-  var nextValue = shallowCopy(value);
-
-  if (hasOwnProperty.call(spec, COMMAND_MERGE)) {
-    var mergeObj = spec[COMMAND_MERGE];
-    invariant(
-      mergeObj && typeof mergeObj === 'object',
-      "update(): %s expects a spec of type 'object'; got %s",
-      COMMAND_MERGE,
-      mergeObj
-    );
-    invariant(
-      nextValue && typeof nextValue === 'object',
-      "update(): %s expects a target of type 'object'; got %s",
-      COMMAND_MERGE,
-      nextValue
-    );
-    _assign(nextValue, spec[COMMAND_MERGE]);
-  }
-
-  if (hasOwnProperty.call(spec, COMMAND_PUSH)) {
-    invariantArrayCase(value, spec, COMMAND_PUSH);
-    spec[COMMAND_PUSH].forEach(function(item) {
-      nextValue.push(item);
-    });
-  }
-
-  if (hasOwnProperty.call(spec, COMMAND_UNSHIFT)) {
-    invariantArrayCase(value, spec, COMMAND_UNSHIFT);
-    spec[COMMAND_UNSHIFT].forEach(function(item) {
-      nextValue.unshift(item);
-    });
-  }
-
-  if (hasOwnProperty.call(spec, COMMAND_SPLICE)) {
-    invariant(
-      Array.isArray(value),
-      'Expected %s target to be an array; got %s',
-      COMMAND_SPLICE,
-      value
-    );
-    invariant(
-      Array.isArray(spec[COMMAND_SPLICE]),
-      'update(): expected spec of %s to be an array of arrays; got %s. ' +
-        'Did you forget to wrap your parameters in an array?',
-      COMMAND_SPLICE,
-      spec[COMMAND_SPLICE]
-    );
-    spec[COMMAND_SPLICE].forEach(function(args) {
-      invariant(
-        Array.isArray(args),
-        'update(): expected spec of %s to be an array of arrays; got %s. ' +
-          'Did you forget to wrap your parameters in an array?',
-        COMMAND_SPLICE,
-        spec[COMMAND_SPLICE]
-      );
-      nextValue.splice.apply(nextValue, args);
-    });
-  }
-
-  if (hasOwnProperty.call(spec, COMMAND_APPLY)) {
-    invariant(
-      typeof spec[COMMAND_APPLY] === 'function',
-      'update(): expected spec of %s to be a function; got %s.',
-      COMMAND_APPLY,
-      spec[COMMAND_APPLY]
-    );
-    nextValue = spec[COMMAND_APPLY](nextValue);
-  }
-
-  for (var k in spec) {
-    if (!(ALL_COMMANDS_SET.hasOwnProperty(k) && ALL_COMMANDS_SET[k])) {
-      nextValue[k] = update(value[k], spec[k]);
-    }
-  }
-
-  return nextValue;
-}
-
-module.exports = update;
-
 
 /***/ })
 /******/ ]);

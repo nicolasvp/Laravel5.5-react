@@ -8,7 +8,7 @@ use App\Type;
 use App\Line;
 use Validator;
 
-class TestController extends Controller
+class ChampionController extends Controller
 {
     public function index()
     {
@@ -20,9 +20,9 @@ class TestController extends Controller
 
     public function store(Request $request)
     {
-        if($request->hasFile('photo-upload'))
+        if($request->hasFile('photo'))
         {
-            $file = $request->file('photo-upload');
+            $file = $request->file('photo');
             $image_uploaded = \Storage::disk('public')->putFile('/', $file);            
         }
 
@@ -32,7 +32,7 @@ class TestController extends Controller
             'line' => 'required',
             'date' => 'required',
             'genre' => 'required',
-            'photo-upload' => 'required',
+            'photo' => 'required',
         ])->validate();
 
         $dateRequest = $request['date'];
