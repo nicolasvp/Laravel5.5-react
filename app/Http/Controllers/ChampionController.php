@@ -20,12 +20,6 @@ class ChampionController extends Controller
 
     public function store(Request $request)
     {
-        if($request->hasFile('photo'))
-        {
-            $file = $request->file('photo');
-            $image_uploaded = \Storage::disk('public')->putFile('/', $file);            
-        }
-
        Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required',
@@ -34,6 +28,12 @@ class ChampionController extends Controller
             'genre' => 'required',
             'photo' => 'required',
         ])->validate();
+
+        if($request->hasFile('photo'))
+        {
+            $file = $request->file('photo');
+            $image_uploaded = \Storage::disk('public')->putFile('/', $file);            
+        }
 
         $dateRequest = $request['date'];
         $date = strtotime($dateRequest);
@@ -65,6 +65,15 @@ class ChampionController extends Controller
 
     public function updateChamp(Request $request)
     {
+       Validator::make($request->all(), [
+            'name' => 'required',
+            'type' => 'required',
+            'line' => 'required',
+            'date' => 'required',
+            'genre' => 'required',
+            'photo' => 'required',
+        ])->validate();
+                
         $champ = Champion::find($request['id']);
         $dateRequest = $request['date'];
         $date = strtotime($dateRequest);

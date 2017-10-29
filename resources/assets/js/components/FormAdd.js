@@ -63,7 +63,7 @@ class FormAdd extends Component {
             <span className="help-block" style={{ color: 'red' }}>{ this.props.errors.genre }</span>
         </div> 
         <FormGroup>
-          <Label for="date">Date</Label>
+          <Label for="date">Fecha de creación</Label>
           <Input type="date" name="date" id="date" placeholder="date placeholder" min="1979-12-31" max="2020-01-02" onChange={ this.props.handleInput.bind(this) }/>
           <span className="help-block" style={{ color: 'red' }}>{ this.props.errors.date }</span>
         </FormGroup>        

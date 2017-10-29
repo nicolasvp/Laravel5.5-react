@@ -59746,6 +59746,9 @@ var Table = function (_Component) {
 
                 var formData = new FormData();
                 formData.append('photo', fileInput.files[0]);
+                if (typeof fileInput.files[0] === 'undefined') {
+                    formData.append('photo', '');
+                }
                 formData.append('name', this.state.newChamp.name);
                 formData.append('line', this.state.newChamp.line);
                 formData.append('type', this.state.newChamp.type);
@@ -59756,7 +59759,6 @@ var Table = function (_Component) {
                     _this2.props.updateChampList(response.data, 'add');
                     _this2.closeModal();
                 }).catch(function (error) {
-                    console.log(error.response.data.errors);
                     _this2.showErrors(error.response.data.errors);
                 });
             }
@@ -59784,6 +59786,8 @@ var Table = function (_Component) {
                     _this2.closeModal();
                 }).catch(function (error) {
                     console.log(error);
+                    _this2.showErrors(error.response.data.errors);
+                    // console.log(this.state.errors);       
                 });
             }
         }
@@ -63725,7 +63729,7 @@ var FormAdd = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             __WEBPACK_IMPORTED_MODULE_2_reactstrap__["d" /* Label */],
                             { 'for': 'date' },
-                            'Date'
+                            'Fecha de creaci\xF3n'
                         ),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_reactstrap__["c" /* Input */], { type: 'date', name: 'date', id: 'date', placeholder: 'date placeholder', min: '1979-12-31', max: '2020-01-02', onChange: this.props.handleInput.bind(this) }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63863,6 +63867,11 @@ var FormEdit = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'ti-user' })
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { ref: 'name', type: 'text', className: 'form-control', id: 'name', name: 'name', defaultValue: this.props.data.champEdit.name, onChange: this.props.handleEdit.bind(this), placeholder: 'Nombre' })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.data.errors.name
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63888,6 +63897,11 @@ var FormEdit = function (_Component) {
                                     line.name
                                 );
                             })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.data.errors.line
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63913,6 +63927,11 @@ var FormEdit = function (_Component) {
                                     type.name
                                 );
                             })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.data.errors.type
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -63954,25 +63973,26 @@ var FormEdit = function (_Component) {
                                     )
                                 )
                             )
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.data.errors.genre
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                        'div',
-                        { className: 'form-group' },
+                        __WEBPACK_IMPORTED_MODULE_2_reactstrap__["b" /* FormGroup */],
+                        null,
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'label',
-                            { className: 'control-label' },
+                            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["d" /* Label */],
+                            { 'for': 'date' },
                             'Fecha de creaci\xF3n'
                         ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_reactstrap__["c" /* Input */], { type: 'date', name: 'date', id: 'date', placeholder: 'date placeholder', min: '1979-12-31', max: '2020-01-02', defaultValue: this.state.date, onChange: this.props.handleEdit.bind(this) }),
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                            'div',
-                            { className: 'input-group' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('input', { type: 'text', name: 'date', id: 'date', className: 'form-control mydatepicker', placeholder: 'mm/dd/yyyy', defaultValue: this.state.date, onChange: this.props.handleEdit.bind(this) }),
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                'span',
-                                { className: 'input-group-addon' },
-                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('i', { className: 'icon-calender' })
-                            )
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.data.errors.date
                         )
                     ),
                     __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
@@ -64017,6 +64037,11 @@ var FormEdit = function (_Component) {
                             'div',
                             { className: 'col-md-2 text-center' },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { alt: this.props.data.champEdit.name, src: 'images/' + this.props.data.champEdit.photo, width: '50', height: '50' })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'span',
+                            { className: 'help-block', style: { color: 'red' } },
+                            this.props.data.errors.photo
                         )
                     )
                 )

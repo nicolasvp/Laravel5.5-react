@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 class FormEdit extends Component {
 
@@ -31,6 +31,7 @@ class FormEdit extends Component {
                <div className="input-group-addon"><i className="ti-user"></i></div>
                 <input ref="name" type="text" className="form-control" id="name" name="name" defaultValue={ this.props.data.champEdit.name } onChange={ this.props.handleEdit.bind(this) } placeholder="Nombre"></input>
             </div>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.data.errors.name }</span>
          </div>
         <div className="form-group">
             <label className="control-label">Linea</label>
@@ -42,6 +43,7 @@ class FormEdit extends Component {
                     )
                 }
             </select>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.data.errors.line }</span>
         </div> 
         <div className="form-group">
             <label className="control-label">Tipo</label>
@@ -53,6 +55,7 @@ class FormEdit extends Component {
                     )
                 }
             </select>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.data.errors.type }</span>
         </div>  
         <div className="form-group">
             <label className="control-label">Género</label>
@@ -70,14 +73,13 @@ class FormEdit extends Component {
                     </div>
                 </label>
             </div>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.data.errors.genre }</span>
         </div>
-        <div className="form-group">
-            <label className="control-label">Fecha de creación</label>
-            <div className="input-group">
-              <input type="text" name="date" id="date" className="form-control mydatepicker" placeholder="mm/dd/yyyy" defaultValue={ this.state.date }  onChange={ this.props.handleEdit.bind(this) }></input>
-            <span className="input-group-addon"><i className="icon-calender"></i></span>
-            </div>
-        </div>  
+        <FormGroup>
+          <Label for="date">Fecha de creación</Label>
+          <Input type="date" name="date" id="date" placeholder="date placeholder" min="1979-12-31" max="2020-01-02" defaultValue={ this.state.date } onChange={ this.props.handleEdit.bind(this) }/>
+          <span className="help-block" style={{ color: 'red' }}>{ this.props.data.errors.date }</span>
+        </FormGroup>            
 		<div className="form-group">
 			<label className="control-label col-md-12">Subir Imagen</label>
 		    <div className="fileinput fileinput-new input-group col-md-10" data-provides="fileinput">
@@ -95,6 +97,7 @@ class FormEdit extends Component {
             <div className="col-md-2 text-center">
                 <img alt={ this.props.data.champEdit.name } src={ 'images/' + this.props.data.champEdit.photo } width='50' height='50'></img>
             </div>
+            <span className="help-block" style={{ color: 'red' }}>{ this.props.data.errors.photo }</span>
 		</div>                                                        
       </form> 
     </div>

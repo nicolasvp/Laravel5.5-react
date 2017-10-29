@@ -57,7 +57,10 @@ class Table extends Component {
         if(e.target.name === 'store'){
 
             let formData = new FormData();
-            formData.append('photo',fileInput.files[0]);
+            formData.append('photo',fileInput.files[0]); 
+            if(typeof(fileInput.files[0]) === 'undefined'){
+              formData.append('photo','');  
+            }
             formData.append('name',this.state.newChamp.name);
             formData.append('line',this.state.newChamp.line);
             formData.append('type',this.state.newChamp.type);
@@ -70,7 +73,6 @@ class Table extends Component {
                 this.closeModal();
             })
             .catch((error) => {
-                console.log(error.response.data.errors);
                 this.showErrors(error.response.data.errors);         
             });           
         }
@@ -98,9 +100,11 @@ class Table extends Component {
                 this.props.updateChampList(response.data,'update');
                 this.closeModal();
             })
-            .catch(function (error) {
+            .catch((error) => {
                 console.log(error);
-            });        
+                this.showErrors(error.response.data.errors);  
+               // console.log(this.state.errors);       
+            });    
         }       
     }
 
@@ -118,12 +122,13 @@ class Table extends Component {
         });
     }
 
+
     // Toma los valores del modal cuando se está creando y actualiza el valor del state
     handleInput(event){
         const target = event.target;
         const value = target.value;
         const name = target.name;
-
+        
         if(value !== '')
         {
             this.state.newChamp[[name]] = value;
