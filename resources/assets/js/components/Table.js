@@ -150,22 +150,34 @@ class Table extends Component {
     }
 
     // Elimina el registro y luego actualiza el state
+    
     handleDestroy(event){
         event.preventDefault();
         const value = event.target.value;
-
-        axios.delete('/champion/'+value,value)
-        .then((response) => {
-            const champions = this.props.data.champions.filter(champion =>
-                        champion.id !== parseInt(value)
-                    );
-            this.props.updateChampList(champions,'delete');
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-        
+        swal({
+            title: "¿Está seguro de eliminar este campeón?",
+            text: "Se eliminarán los datos permanentemente.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Si, quiero eliminarlo.",
+            closeOnConfirm: false
+        }, (() => {
+                axios.delete('/champion/'+value,value)
+                .then((response) => {
+                    const champions = this.props.data.champions.filter(champion =>
+                                champion.id !== parseInt(value)
+                            );
+                    this.props.updateChampList(champions,'delete');
+                    swal("Eliminado!", "El campeon ha sido borrado de los registros.", "success");
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });             
+            })
+        );        
     }
+
 
     // Abre el modal
     handleClick(event) {

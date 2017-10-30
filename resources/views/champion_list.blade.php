@@ -21,7 +21,7 @@
     <link href="css/style.css" rel="stylesheet">
     <!-- color CSS -->
     <link href="css/colors/blue.css" id="theme" rel="stylesheet">
-
+    <link href="{{ asset('plugins/sweetalert/sweetalert.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -51,9 +51,7 @@
     <script src="{{ asset('plugins/bower_components/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <!-- File Upload -->
     <script src="{{ asset('js/jasny-bootstrap.js') }}"></script>
-    <script type="text/javascript">
-        $('.mydatepicker').datepicker();
-    </script>
+    <script src="{{ asset('plugins/sweetalert/sweetalert.min.js') }}"></script>
     <!--Style Switcher -->
     <script src="{{ asset('plugins/bower_components/styleswitcher/jQuery.style.switcher.js') }}"></script>
 </body>
