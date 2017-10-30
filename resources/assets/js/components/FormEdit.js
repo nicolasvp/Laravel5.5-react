@@ -13,11 +13,9 @@ class FormEdit extends Component {
 
   // Antes que se monte el componente convierte el formato de la fecha 
   componentWillMount(){
-    const only_date = this.props.data.champEdit.date.split(" ")[0];
-    const date_splited = only_date.split("-");
-    const date_formated = date_splited[2]+"/"+date_splited[1]+"/"+date_splited[0];
+    const formated_date = this.props.data.champEdit.date.split(" ")[0];
     this.setState({
-        date: date_formated
+        date: formated_date
     });
   }
 
@@ -48,7 +46,7 @@ class FormEdit extends Component {
         <div className="form-group">
             <label className="control-label">Tipo</label>
             <select className="form-control" name="type_id" id="type" defaultValue={ this.props.data.champEdit.type_id }  onChange={ this.props.handleEdit.bind(this) }>
-                <option value="">Seleccione</option>
+                <option value="" disabled>Seleccione</option>
                 {
                     this.props.state.types.map(type =>
                         <option value={ type.id } key={ type.id }>{ type.name }</option>

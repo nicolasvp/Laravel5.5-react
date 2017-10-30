@@ -11,17 +11,19 @@ class Body extends Component {
             champions: []
         };
         this.updateChampList = this.updateChampList.bind(this);
+        this.format_date = this.format_date.bind(this);
     }
 
     // Trae todos los campeones de la bdd y actualiza el state
     _fetchData(){
         axios({
             method:'get',
-            url:'http://react.app/test',
+            url:'http://react.app/champion',
             responseType:'json'
         })
             .then((response) => {
                 response.data.champions.map(champion =>{
+                    champion.date = this.format_date(champion.date);
                     this.state.champions.push(champion);
                 });
                 this.setState({
@@ -38,10 +40,18 @@ class Body extends Component {
         this._fetchData();
     }
 
+    format_date(date){
+        const only_date = date.split(" ")[0];
+        const separeted_date = only_date.split("-");
+        const formated_date = separeted_date[2]+"/"+separeted_date[1]+"/"+separeted_date[0];  
+        return formated_date;
+    }
+
     // Actualiza la lista de campeones cuando se crea, edita o elimina
     updateChampList(champion,action){
 
         if(action === 'add'){
+            champion.date = this.format_date(champion.date);
             this.state.champions.push(champion);
             this.setState({
                 champions: this.state.champions
@@ -53,13 +63,17 @@ class Body extends Component {
             const champ_list = this.state.champions;
             const champions = this.state.champions.forEach(function(value,index){
                                     if(value.id === champion.id){
+                                        const only_date = champion.date.split(" ")[0];
+                                        const separeted_date = only_date.split("-");
+                                        const formated_date = separeted_date[2]+"/"+separeted_date[1]+"/"+separeted_date[0]; 
+                                        champion.date = formated_date;
                                         champ_list[index] = champion;
                                     }
                                 });
+        
             this.setState({
                 champions: champ_list
             });
-
         }
 
         if(action === 'delete'){

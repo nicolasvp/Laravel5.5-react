@@ -26,7 +26,7 @@ class ChampionController extends Controller
             'line' => 'required',
             'date' => 'required',
             'genre' => 'required',
-            'photo' => 'required',
+           // 'photo' => 'required',
         ])->validate();
 
         if($request->hasFile('photo'))
@@ -53,7 +53,9 @@ class ChampionController extends Controller
 
     public function show($id)
     {
-        //
+        $champion = Champion::find($id);
+
+        return response()->json($champion->with('type')->with('line')->where('id',$id)->first());
     }
 
     public function edit($id)
@@ -65,13 +67,14 @@ class ChampionController extends Controller
 
     public function updateChamp(Request $request)
     {
+
        Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required',
             'line' => 'required',
             'date' => 'required',
             'genre' => 'required',
-            'photo' => 'required',
+           // 'photo' => 'required',
         ])->validate();
                 
         $champ = Champion::find($request['id']);

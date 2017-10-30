@@ -31,8 +31,8 @@ class Table extends Component {
                 date: '',
                 genre: '',
                 photo: ''                  
-            }
-
+            },
+            action: ''
         };
         this.handleInput = this.handleInput.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
@@ -67,7 +67,7 @@ class Table extends Component {
             formData.append('date',this.state.newChamp.date);
             formData.append('genre',this.state.newChamp.genre);
 
-            axios.post('/test',formData,config)
+            axios.post('/champion',formData,config)
             .then((response) => {
                 this.props.updateChampList(response.data,'add');
                 this.closeModal();
@@ -92,7 +92,7 @@ class Table extends Component {
 
             axios({
               method: 'post',
-              url: 'http://react.app/test/updateChamp/',
+              url: 'http://react.app/champion/updateChamp/',
               data: formDataUpdate,
               headers: {'Content-Type': 'multipart/form-data'}
             })
@@ -101,9 +101,7 @@ class Table extends Component {
                 this.closeModal();
             })
             .catch((error) => {
-                console.log(error);
                 this.showErrors(error.response.data.errors);  
-               // console.log(this.state.errors);       
             });    
         }       
     }
@@ -129,14 +127,11 @@ class Table extends Component {
         const value = target.value;
         const name = target.name;
         
-        if(value !== '')
-        {
-            this.state.newChamp[[name]] = value;
-            this.state.errors[[name]] = '';
-            this.setState({
-                errors: this.state.errors
-            });
-        }
+        this.state.newChamp[[name]] = value;
+        this.state.errors[[name]] = '';
+        this.setState({
+            errors: this.state.errors
+        });
     }
 
     // Toma los valores del modal cuando se está editando y actualiza el valor del state
@@ -145,13 +140,13 @@ class Table extends Component {
         const value = target.value;
         const name = target.name;
 
-        if(value !== '')
-        {
-            this.state.champEdit[[name]] = value;
-            this.setState({
-                champEdit: this.state.champEdit
-            });           
-        }
+        this.state.champEdit[[name]] = value;
+        this.state.errors[[name]] = '';
+        this.setState({
+            champEdit: this.state.champEdit,
+            errors: this.state.errors
+        });                
+    
     }
 
     // Elimina el registro y luego actualiza el state
@@ -159,7 +154,7 @@ class Table extends Component {
         event.preventDefault();
         const value = event.target.value;
 
-        axios.delete('/test/'+value,value)
+        axios.delete('/champion/'+value,value)
         .then((response) => {
             const champions = this.props.data.champions.filter(champion =>
                         champion.id !== parseInt(value)
@@ -172,17 +167,37 @@ class Table extends Component {
         
     }
 
-    // Abre el modal para editar 
+    // Abre el modal
     handleClick(event) {
         const name = event.target.name
         const value = event.target.value;
         this.closeModal();
-        if(name === 'edit'){  
 
-            axios.get('/test/'+value+'/edit')
+        if(name === 'add'){
+            this.setState({
+                action: 'add'
+            });            
+        }
+
+        if(name === 'show'){
+            axios.get('/champion/'+value)
             .then((response) => {
                 this.setState({
-                    champEdit: response.data
+                    champEdit: response.data,
+                    action: 'show'
+                });
+            })
+            .catch(function (error) {
+                console.log(error);
+            });   
+        }
+
+        if(name === 'edit'){  
+            axios.get('/champion/'+value+'/edit')
+            .then((response) => {
+                this.setState({
+                    champEdit: response.data,
+                    action: 'edit'
                 });
             })
             .catch(function (error) {
@@ -238,8 +253,7 @@ class Table extends Component {
                                     <th>Genero</th>
                                     <th>Fecha</th>
                                     <th>Foto</th>
-                                    <th>Editar</th>
-                                    <th>Eliminar</th>
+                                    <th>Acciones</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -254,9 +268,8 @@ class Table extends Component {
                                                 <td>{ champion.date.split(" ")[0] }</td>
                                                 <td><img alt={ champion.name } src={ 'images/' + champion.photo } width='50' height='50'></img></td>
                                                 <td>
-                                                    <Button color="primary" name="edit" value={ champion.id } onClick={ this.handleClick.bind(this) }>Editar</Button>
-                                                </td>
-                                                <td>
+                                                    <Button color="info" name="show" value={ champion.id } onClick={ this.handleClick.bind(this) }>Ver</Button>
+                                                    <Button color="warning" name="edit" value={ champion.id } onClick={ this.handleClick.bind(this) }>Editar</Button>
                                                     <Button color="danger" name="destroy" value={ champion.id } onClick={ this.handleDestroy.bind(this) }>Eliminar</Button>
                                                 </td>
                                             </tr>

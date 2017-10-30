@@ -12,10 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('test-react');
+    return view('champion_list');
 });
-Route::resource('/test','ChampionController')->only(['index','store','show','edit','destroy']);
-Route::post('/test/updateChamp','ChampionController@updateChamp');
+Route::resource('/champion','ChampionController')->only(['index','store','show','edit','destroy']);
+Route::post('/champion/updateChamp','ChampionController@updateChamp');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

@@ -59388,6 +59388,7 @@ var Body = function (_Component) {
             champions: []
         };
         _this.updateChampList = _this.updateChampList.bind(_this);
+        _this.format_date = _this.format_date.bind(_this);
         return _this;
     }
 
@@ -59401,10 +59402,11 @@ var Body = function (_Component) {
 
             __WEBPACK_IMPORTED_MODULE_3_axios___default()({
                 method: 'get',
-                url: 'http://react.app/test',
+                url: 'http://react.app/champion',
                 responseType: 'json'
             }).then(function (response) {
                 response.data.champions.map(function (champion) {
+                    champion.date = _this2.format_date(champion.date);
                     _this2.state.champions.push(champion);
                 });
                 _this2.setState({
@@ -59419,6 +59421,14 @@ var Body = function (_Component) {
         value: function componentDidMount() {
             this._fetchData();
         }
+    }, {
+        key: 'format_date',
+        value: function format_date(date) {
+            var only_date = date.split(" ")[0];
+            var separeted_date = only_date.split("-");
+            var formated_date = separeted_date[2] + "/" + separeted_date[1] + "/" + separeted_date[0];
+            return formated_date;
+        }
 
         // Actualiza la lista de campeones cuando se crea, edita o elimina
 
@@ -59427,6 +59437,7 @@ var Body = function (_Component) {
         value: function updateChampList(champion, action) {
 
             if (action === 'add') {
+                champion.date = this.format_date(champion.date);
                 this.state.champions.push(champion);
                 this.setState({
                     champions: this.state.champions
@@ -59438,9 +59449,14 @@ var Body = function (_Component) {
                 var champ_list = this.state.champions;
                 var champions = this.state.champions.forEach(function (value, index) {
                     if (value.id === champion.id) {
+                        var only_date = champion.date.split(" ")[0];
+                        var separeted_date = only_date.split("-");
+                        var formated_date = separeted_date[2] + "/" + separeted_date[1] + "/" + separeted_date[0];
+                        champion.date = formated_date;
                         champ_list[index] = champion;
                     }
                 });
+
                 this.setState({
                     champions: champ_list
                 });
@@ -59713,8 +59729,8 @@ var Table = function (_Component) {
                 date: '',
                 genre: '',
                 photo: ''
-            }
-
+            },
+            action: ''
         };
         _this.handleInput = _this.handleInput.bind(_this);
         _this.handleEdit = _this.handleEdit.bind(_this);
@@ -59755,7 +59771,7 @@ var Table = function (_Component) {
                 formData.append('date', this.state.newChamp.date);
                 formData.append('genre', this.state.newChamp.genre);
 
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/test', formData, config).then(function (response) {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.post('/champion', formData, config).then(function (response) {
                     _this2.props.updateChampList(response.data, 'add');
                     _this2.closeModal();
                 }).catch(function (error) {
@@ -59778,16 +59794,14 @@ var Table = function (_Component) {
 
                 __WEBPACK_IMPORTED_MODULE_1_axios___default()({
                     method: 'post',
-                    url: 'http://react.app/test/updateChamp/',
+                    url: 'http://react.app/champion/updateChamp/',
                     data: formDataUpdate,
                     headers: { 'Content-Type': 'multipart/form-data' }
                 }).then(function (response) {
                     _this2.props.updateChampList(response.data, 'update');
                     _this2.closeModal();
                 }).catch(function (error) {
-                    console.log(error);
                     _this2.showErrors(error.response.data.errors);
-                    // console.log(this.state.errors);       
                 });
             }
         }
@@ -59815,13 +59829,11 @@ var Table = function (_Component) {
             var value = target.value;
             var name = target.name;
 
-            if (value !== '') {
-                this.state.newChamp[[name]] = value;
-                this.state.errors[[name]] = '';
-                this.setState({
-                    errors: this.state.errors
-                });
-            }
+            this.state.newChamp[[name]] = value;
+            this.state.errors[[name]] = '';
+            this.setState({
+                errors: this.state.errors
+            });
         }
 
         // Toma los valores del modal cuando se está editando y actualiza el valor del state
@@ -59833,12 +59845,12 @@ var Table = function (_Component) {
             var value = target.value;
             var name = target.name;
 
-            if (value !== '') {
-                this.state.champEdit[[name]] = value;
-                this.setState({
-                    champEdit: this.state.champEdit
-                });
-            }
+            this.state.champEdit[[name]] = value;
+            this.state.errors[[name]] = '';
+            this.setState({
+                champEdit: this.state.champEdit,
+                errors: this.state.errors
+            });
         }
 
         // Elimina el registro y luego actualiza el state
@@ -59851,7 +59863,7 @@ var Table = function (_Component) {
             event.preventDefault();
             var value = event.target.value;
 
-            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete('/test/' + value, value).then(function (response) {
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.delete('/champion/' + value, value).then(function (response) {
                 var champions = _this3.props.data.champions.filter(function (champion) {
                     return champion.id !== parseInt(value);
                 });
@@ -59861,7 +59873,7 @@ var Table = function (_Component) {
             });
         }
 
-        // Abre el modal para editar 
+        // Abre el modal
 
     }, {
         key: 'handleClick',
@@ -59871,11 +59883,29 @@ var Table = function (_Component) {
             var name = event.target.name;
             var value = event.target.value;
             this.closeModal();
-            if (name === 'edit') {
 
-                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/test/' + value + '/edit').then(function (response) {
+            if (name === 'add') {
+                this.setState({
+                    action: 'add'
+                });
+            }
+
+            if (name === 'show') {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/champion/' + value).then(function (response) {
                     _this4.setState({
-                        champEdit: response.data
+                        champEdit: response.data,
+                        action: 'show'
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            }
+
+            if (name === 'edit') {
+                __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/champion/' + value + '/edit').then(function (response) {
+                    _this4.setState({
+                        champEdit: response.data,
+                        action: 'edit'
                     });
                 }).catch(function (error) {
                     console.log(error);
@@ -59987,12 +60017,7 @@ var Table = function (_Component) {
                                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                             'th',
                                             null,
-                                            'Editar'
-                                        ),
-                                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            'th',
-                                            null,
-                                            'Eliminar'
+                                            'Acciones'
                                         )
                                     )
                                 ),
@@ -60043,13 +60068,14 @@ var Table = function (_Component) {
                                                 null,
                                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                     __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
-                                                    { color: 'primary', name: 'edit', value: champion.id, onClick: _this5.handleClick.bind(_this5) },
+                                                    { color: 'info', name: 'show', value: champion.id, onClick: _this5.handleClick.bind(_this5) },
+                                                    'Ver'
+                                                ),
+                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                                    __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
+                                                    { color: 'warning', name: 'edit', value: champion.id, onClick: _this5.handleClick.bind(_this5) },
                                                     'Editar'
-                                                )
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
+                                                ),
                                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                                     __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
                                                     { color: 'danger', name: 'destroy', value: champion.id, onClick: _this5.handleDestroy.bind(_this5) },
@@ -63435,6 +63461,7 @@ module.exports = toNumber;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_reactstrap__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FormAdd__ = __webpack_require__(236);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__FormEdit__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__FormShow__ = __webpack_require__(248);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -63442,6 +63469,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 
 
 
@@ -63474,7 +63502,7 @@ var ModalComponent = function (_Component) {
 
       __WEBPACK_IMPORTED_MODULE_1_axios___default()({
         method: 'get',
-        url: 'http://react.app/test',
+        url: 'http://react.app/champion',
         responseType: 'json'
       }).then(function (response) {
         response.data.types.map(function (type) {
@@ -63501,15 +63529,27 @@ var ModalComponent = function (_Component) {
     value: function render() {
       var form = null;
       var button = null;
+      var header = null;
       // Muestra un formulario dependiendo si se creará o editará
-      if (this.props.data.champEdit.name) {
-        form = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__FormEdit__["a" /* default */], { data: this.props.data, state: this.state, handleEdit: this.props.handleEdit });
-        button = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
-          { color: 'primary', name: 'update', value: this.props.data.champEdit.id, onClick: this.props.sendForm.bind(this) },
-          'Aceptar'
-        );
-      } else {
+      if (this.props.data.action === 'edit') {
+        if (this.props.data.champEdit.name !== '') {
+          header = 'Editar campeon: ' + this.props.data.champEdit.name;
+          form = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__FormEdit__["a" /* default */], { data: this.props.data, state: this.state, handleEdit: this.props.handleEdit });
+          button = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
+            { color: 'primary', name: 'update', value: this.props.data.champEdit.id, onClick: this.props.sendForm.bind(this) },
+            'Aceptar'
+          );
+        }
+      }
+      if (this.props.data.action === 'show') {
+        if (this.props.data.champEdit.name !== '') {
+          header = this.props.data.champEdit.name;
+          form = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_5__FormShow__["a" /* default */], { data: this.props.data, state: this.state });
+        }
+      }
+      if (this.props.data.action === 'add') {
+        header = 'Nuevo Campeón';
         form = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__FormAdd__["a" /* default */], { data: this.state, errors: this.props.data.errors, handleInput: this.props.handleInput });
         button = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
@@ -63526,7 +63566,11 @@ var ModalComponent = function (_Component) {
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_2_reactstrap__["h" /* ModalHeader */],
             { toggle: this.props.closeModal },
-            this.props.data.champEdit.name ? 'Editar campeón' : 'Nuevo campeón'
+            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+              'strong',
+              null,
+              header
+            )
           ),
           __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
             __WEBPACK_IMPORTED_MODULE_2_reactstrap__["f" /* ModalBody */],
@@ -63834,11 +63878,9 @@ var FormEdit = function (_Component) {
     _createClass(FormEdit, [{
         key: 'componentWillMount',
         value: function componentWillMount() {
-            var only_date = this.props.data.champEdit.date.split(" ")[0];
-            var date_splited = only_date.split("-");
-            var date_formated = date_splited[2] + "/" + date_splited[1] + "/" + date_splited[0];
+            var formated_date = this.props.data.champEdit.date.split(" ")[0];
             this.setState({
-                date: date_formated
+                date: formated_date
             });
         }
     }, {
@@ -63917,7 +63959,7 @@ var FormEdit = function (_Component) {
                             { className: 'form-control', name: 'type_id', id: 'type', defaultValue: this.props.data.champEdit.type_id, onChange: this.props.handleEdit.bind(this) },
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                 'option',
-                                { value: '' },
+                                { value: '', disabled: true },
                                 'Seleccione'
                             ),
                             this.props.state.types.map(function (type) {
@@ -64059,6 +64101,136 @@ var FormEdit = function (_Component) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_reactstrap__ = __webpack_require__(36);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+var FormShow = function (_Component) {
+    _inherits(FormShow, _Component);
+
+    function FormShow(props) {
+        _classCallCheck(this, FormShow);
+
+        var _this = _possibleConstructorReturn(this, (FormShow.__proto__ || Object.getPrototypeOf(FormShow)).call(this, props));
+
+        _this.state = {
+            date: ''
+        };
+        return _this;
+    }
+
+    // Antes que se monte el componente convierte el formato de la fecha 
+
+
+    _createClass(FormShow, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            var only_date = this.props.data.champEdit.date.split(" ")[0];
+            var separeted_date = only_date.split("-");
+            var formated_date = separeted_date[2] + "/" + separeted_date[1] + "/" + separeted_date[0];
+            this.setState({
+                date: formated_date
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                'div',
+                null,
+                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'div',
+                    { className: 'white-box' },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'div',
+                        { className: 'row' },
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'col-md-4 col-sm-4 text-center' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { src: 'images/' + this.props.data.champEdit.photo, alt: this.props.data.champEdit.name, className: 'img-circle img-responsive' })
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            'div',
+                            { className: 'col-md-8 col-sm-8' },
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('h3', { className: 'box-title m-b-0' }),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('small', null),
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                'p',
+                                null,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'strong',
+                                    null,
+                                    'Nombre: '
+                                ),
+                                this.props.data.champEdit.name,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'strong',
+                                    null,
+                                    'Tipo: '
+                                ),
+                                this.props.data.champEdit.type.name,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'strong',
+                                    null,
+                                    'Linea: '
+                                ),
+                                this.props.data.champEdit.line.name,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'strong',
+                                    null,
+                                    'G\xE9nero: '
+                                ),
+                                this.props.data.champEdit.genre,
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('br', null),
+                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                                    'strong',
+                                    null,
+                                    'Fecha de creaci\xF3n: '
+                                ),
+                                this.state.date
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return FormShow;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+/* harmony default export */ __webpack_exports__["a"] = (FormShow);
 
 /***/ })
 /******/ ]);
