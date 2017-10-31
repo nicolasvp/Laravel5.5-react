@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
 import update from 'react-addons-update';
 import Table from './Table';
+import Pagination from './Pagination';
 import axios from 'axios';
 
 class Body extends Component {
 
     constructor(props){
         super(props);
+        // an example array of items to be paged
+//        var exampleItems = _.range(1, 4).map(i => { return { id: i, name: 'Item ' + i }; });       
+
+        var exampleItems = [{id: 1, name: 'Caitlyn'},{id: 2, name: 'Caitlyn2'},{id:3, name: 'Caitlyn3'},{id: 4, name: 'Caitlyn4'}];
         this.state = {
-            champions: []
+            champions: [],
+            exampleItems: exampleItems,
+            pageOfItems: []            
         };
+
         this.updateChampList = this.updateChampList.bind(this);
         this.format_date = this.format_date.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
     }
 
     // Trae todos los campeones de la bdd y actualiza el state
@@ -21,19 +30,28 @@ class Body extends Component {
             url:'http://react.app/champion',
             responseType:'json'
         })
-            .then((response) => {
-                response.data.champions.map(champion =>{
-                    champion.date = this.format_date(champion.date);
-                    this.state.champions.push(champion);
-                });
-                this.setState({
-                    champions: this.state.champions
-                });
-
-            })
-            .catch(function (error) {
-                console.log(error);
+        .then((response) => {
+            response.data.champions.map(champion =>{
+                console.log(champion);
+                champion.date = this.format_date(champion.date);
+                this.state.champions.push(champion);
+               // this.state.exampleItems.push(champion);
+              //  this.state.pageOfItems.push(champion);
             });
+            this.setState({
+                champions: this.state.champions,
+              //  exampleItems: this.state.exampleItems,
+             //   pageOfItems: this.state.pageOfItems
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+
+    onChangePage(pageOfItems) {
+        // update state with new page of items
+        this.setState({ pageOfItems: pageOfItems });
     }
 
     componentDidMount(){
@@ -94,10 +112,18 @@ class Body extends Component {
                     <div className="row">
                         <div className="col-md-12">
                             <Table data={ this.state } updateChampList={ this.updateChampList }/>
+                            <Pagination />
                         </div>
+
+                        <div className="text-center">
+                            {this.state.pageOfItems.map(item =>
+                                <div key={ item.id }>{item.name}</div>
+                            )}
+                        </div>
+                        <Pagination items={ this.state.exampleItems } onChangePage={this.onChangePage} />
                     </div>
                 </div>
-            </div>
+            </div>           
 		)
 	}
 }

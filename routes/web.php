@@ -10,17 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('champion_list');
-});
-Route::resource('/champion','ChampionController')->only(['index','store','show','edit','destroy']);
-Route::post('/champion/updateChamp','ChampionController@updateChamp');
+Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/images/{filename}',function ($filename) {
-    $file = \Storage::disk('public')->get($filename);
-    return response($file, 200)->header('Content-Type', 'image/png');
+Route::group(['middleware' => ['auth']], function () {
+	Route::view('/','champion_list');
+	Route::resource('/champion','ChampionController')->only(['index','store','show','edit','destroy']);
+	Route::post('/champion/updateChamp','ChampionController@updateChamp');
+	Route::get('/images/{filename}',function ($filename) {
+	    $file = \Storage::disk('public')->get($filename);
+	    return response($file, 200)->header('Content-Type', 'image/png');
+	});
 });

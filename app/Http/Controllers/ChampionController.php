@@ -92,7 +92,7 @@ class ChampionController extends Controller
         {
             $file = $request->file('photo-upload');
             $image_uploaded = \Storage::disk('public')->putFile('/', $file);   
-            \Storage::delete($champ->photo);    
+            \Storage::disk('public')->delete($champ->photo);    
             $champ->photo = $image_uploaded;     
         }
 
@@ -105,6 +105,7 @@ class ChampionController extends Controller
     {
         $champ = Champion::findOrFail($id);
         $champ->delete();
+        \Storage::disk('public')->delete($champ->photo);   
 
         return response()->json('ok');
     }
