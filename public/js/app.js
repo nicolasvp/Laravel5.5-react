@@ -63865,7 +63865,8 @@ var PaginationListComponent = function (_Component) {
     var _this = _possibleConstructorReturn(this, (PaginationListComponent.__proto__ || Object.getPrototypeOf(PaginationListComponent)).call(this));
 
     _this.state = {
-      todos: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k'],
+      // todos: ['a','b','c','d','e','f','g','h','i','j','k'],
+      todos: [],
       currentPage: 1,
       todosPerPage: 3
     };
@@ -63885,9 +63886,7 @@ var PaginationListComponent = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      console.log(this.props.champions);
       var _state = this.state,
-          todos = _state.todos,
           currentPage = _state.currentPage,
           todosPerPage = _state.todosPerPage;
 
@@ -63895,19 +63894,19 @@ var PaginationListComponent = function (_Component) {
 
       var indexOfLastTodo = currentPage * todosPerPage;
       var indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-      var currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+      var currentTodos = this.props.champions.slice(indexOfFirstTodo, indexOfLastTodo);
 
       var renderTodos = currentTodos.map(function (todo, index) {
         return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           'li',
           { key: index },
-          todo
+          todo.name
         );
       });
 
       // Logic for displaying page numbers
       var pageNumbers = [];
-      for (var i = 1; i <= Math.ceil(todos.length / todosPerPage); i++) {
+      for (var i = 1; i <= Math.ceil(this.props.champions.length / todosPerPage); i++) {
         pageNumbers.push(i);
       }
 

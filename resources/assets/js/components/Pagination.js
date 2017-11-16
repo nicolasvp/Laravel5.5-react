@@ -7,7 +7,8 @@ class PaginationListComponent extends Component {
     constructor(props) {
         super();
         this.state = {
-          todos: ['a','b','c','d','e','f','g','h','i','j','k'],
+         // todos: ['a','b','c','d','e','f','g','h','i','j','k'],
+          todos: [],
           currentPage: 1,
           todosPerPage: 3
         };
@@ -21,21 +22,20 @@ class PaginationListComponent extends Component {
     }
 
     render() {
-        console.log(this.props.champions);
-        const { todos, currentPage, todosPerPage } = this.state;
+        const { currentPage, todosPerPage } = this.state;
 
         // Logic for displaying current todos
         const indexOfLastTodo = currentPage * todosPerPage;
         const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-        const currentTodos = todos.slice(indexOfFirstTodo, indexOfLastTodo);
+        const currentTodos = this.props.champions.slice(indexOfFirstTodo, indexOfLastTodo);
 
         const renderTodos = currentTodos.map((todo, index) => {
-          return <li key={index}>{todo}</li>;
+          return <li key={index}>{todo.name}</li>;
         });
 
         // Logic for displaying page numbers
         const pageNumbers = [];
-        for (let i = 1; i <= Math.ceil(todos.length / todosPerPage); i++) {
+        for (let i = 1; i <= Math.ceil(this.props.champions.length / todosPerPage); i++) {
           pageNumbers.push(i);
         }
 
