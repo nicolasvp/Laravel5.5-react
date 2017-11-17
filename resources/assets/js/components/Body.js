@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import update from 'react-addons-update';
 import Table from './Table';
-import Pagination from './Pagination';
 import axios from 'axios';
 
 class Body extends Component {
@@ -95,9 +94,8 @@ class Body extends Component {
                 <div className="container" style={{ width: 1600 }}>              
                     <div className="row">
                         <div className="col-md-12">
-                            <Table data={ this.state } updateChampList={ this.updateChampList }/>
+                            <Table data={ this.state } updateChampList={ this.updateChampList } champions={this.state.champions}/>
                         </div>
-                        <Pagination champions={this.state.champions} />
                     </div>
                 </div>
             </div>           

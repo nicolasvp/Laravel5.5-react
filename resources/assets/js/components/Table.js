@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import ModalComponent from './Modal';
 
 class Table extends Component {
@@ -32,7 +33,9 @@ class Table extends Component {
                 genre: '',
                 photo: ''                  
             },
-            action: ''
+            action: '',
+            currentPage: 1,
+            todosPerPage: 3
         };
         this.handleInput = this.handleInput.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
@@ -41,6 +44,7 @@ class Table extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.sendForm = this.sendForm.bind(this);
         this.showErrors = this.showErrors.bind(this);
+        this.handleChangePage = this.handleChangePage.bind(this);
     }
 
     // Envia el formulario al controlador ya sea para guardar o para actualizar
@@ -150,7 +154,6 @@ class Table extends Component {
     }
 
     // Elimina el registro y luego actualiza el state
-    
     handleDestroy(event){
         event.preventDefault();
         const value = event.target.value;
@@ -247,7 +250,53 @@ class Table extends Component {
       });
     }
 
+    //Cambio de página
+    handleChangePage(event) {
+        const { currentPage, todosPerPage } = this.state;
+        const indexOfLastTodo = currentPage * todosPerPage;
+        const pages = Math.ceil(this.props.champions.length / todosPerPage);
+        console.log(pages,currentPage,Number(event.target.id))
+        // Solo cambia de página si es igual o menor que el total de paginas creadas
+        if(Number(event.target.id) !== 0 && Number(event.target.id) <= pages){
+            console.log('enter');
+            this.setState({
+              currentPage: Number(event.target.id)
+            });            
+        }
+    }
+
     render(){
+        const { currentPage, todosPerPage } = this.state;
+        const indexOfLastTodo = currentPage * todosPerPage;
+        const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+        const currentTodos = this.props.champions.slice(indexOfFirstTodo, indexOfLastTodo);
+
+        const renderTodos = currentTodos.map((champion, index) => {
+                              return    <tr key={ champion.id }>
+                                            <td>{ index + 1 + indexOfFirstTodo }</td>
+                                            <td>{ champion.name }</td>
+                                            <td>{ champion.type.name }</td>
+                                            <td>{ champion.line.name }</td>
+                                            <td>{ champion.genre }</td>
+                                            <td>{ champion.date.split(" ")[0] }</td>
+                                            <td><img alt={ champion.name } src={ 'images/' + champion.photo } width='50' height='50'></img></td>
+                                            <td>
+                                                <Button color="info" name="show" value={ champion.id } onClick={ this.handleClick.bind(this) }>Ver</Button>
+                                                <Button color="warning" name="edit" value={ champion.id } onClick={ this.handleClick.bind(this) }>Editar</Button>
+                                                <Button color="danger" name="destroy" value={ champion.id } onClick={ this.handleDestroy.bind(this) }>Eliminar</Button>
+                                            </td>
+                                        </tr>;
+                            });
+
+        const pageNumbers = [];
+        const renderPageNumbers = [];
+        for (let i = 1; i <= Math.ceil(this.props.champions.length / todosPerPage); i++) {
+                    const item = <PaginationItem key={ i }>
+                                    <PaginationLink href="#" id={ i } onClick={ this.handleChangePage }>{ i }</PaginationLink>
+                                </PaginationItem>
+                    pageNumbers.push(item);
+        }
+
         return(
             <div>
                 <div className="white-box">
@@ -269,24 +318,7 @@ class Table extends Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    {
-                                        this.props.data.champions.map((champion,index) =>
-                                            <tr key={ champion.id }>
-                                                <td>{ index + 1 }</td>
-                                                <td>{ champion.name }</td>
-                                                <td>{ champion.type.name }</td>
-                                                <td>{ champion.line.name }</td>
-                                                <td>{ champion.genre }</td>
-                                                <td>{ champion.date.split(" ")[0] }</td>
-                                                <td><img alt={ champion.name } src={ 'images/' + champion.photo } width='50' height='50'></img></td>
-                                                <td>
-                                                    <Button color="info" name="show" value={ champion.id } onClick={ this.handleClick.bind(this) }>Ver</Button>
-                                                    <Button color="warning" name="edit" value={ champion.id } onClick={ this.handleClick.bind(this) }>Editar</Button>
-                                                    <Button color="danger" name="destroy" value={ champion.id } onClick={ this.handleDestroy.bind(this) }>Eliminar</Button>
-                                                </td>
-                                            </tr>
-                                        ) 
-                                    }
+                                    { renderTodos }
                                 </tbody>
                             </table>
                             <ModalComponent 
@@ -299,6 +331,15 @@ class Table extends Component {
                             />  
                         </div>
                     </div>
+                    <Pagination>
+                        <PaginationItem>
+                            <PaginationLink previous href="#" id={ currentPage - 1 } onClick={ this.handleChangePage }/>
+                        </PaginationItem>
+                        { pageNumbers }
+                        <PaginationItem>
+                          <PaginationLink next href="#" id={ currentPage + 1 } onClick={ this.handleChangePage }/>
+                        </PaginationItem>                        
+                    </Pagination>               
                 </div>
             </div>
         )

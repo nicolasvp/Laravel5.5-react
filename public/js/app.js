@@ -3114,9 +3114,9 @@ module.exports = DOMLazyTree;
 /* unused harmony export InputGroupButton */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Label; });
 /* unused harmony export Media */
-/* unused harmony export Pagination */
-/* unused harmony export PaginationItem */
-/* unused harmony export PaginationLink */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return Pagination; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return PaginationItem; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return PaginationLink; });
 /* unused harmony export TabContent */
 /* unused harmony export TabPane */
 /* unused harmony export Jumbotron */
@@ -58965,9 +58965,8 @@ module.exports = ReactDOMInvalidARIAHook;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_addons_update__ = __webpack_require__(221);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_addons_update___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_addons_update__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Table__ = __webpack_require__(222);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Pagination__ = __webpack_require__(237);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_axios__);
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -58975,7 +58974,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
 
 
 
@@ -59006,7 +59004,7 @@ var Body = function (_Component) {
         value: function _fetchData() {
             var _this2 = this;
 
-            __WEBPACK_IMPORTED_MODULE_4_axios___default()({
+            __WEBPACK_IMPORTED_MODULE_3_axios___default()({
                 method: 'get',
                 url: 'http://react.app/champion',
                 responseType: 'json'
@@ -59094,9 +59092,8 @@ var Body = function (_Component) {
                         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                             'div',
                             { className: 'col-md-12' },
-                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Table__["a" /* default */], { data: this.state, updateChampList: this.updateChampList })
-                        ),
-                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Pagination__["a" /* default */], { champions: this.state.champions })
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Table__["a" /* default */], { data: this.state, updateChampList: this.updateChampList, champions: this.state.champions })
+                        )
                     )
                 )
             );
@@ -59303,6 +59300,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
+
 var Table = function (_Component) {
     _inherits(Table, _Component);
 
@@ -59337,7 +59335,9 @@ var Table = function (_Component) {
                 genre: '',
                 photo: ''
             },
-            action: ''
+            action: '',
+            currentPage: 1,
+            todosPerPage: 3
         };
         _this.handleInput = _this.handleInput.bind(_this);
         _this.handleEdit = _this.handleEdit.bind(_this);
@@ -59346,6 +59346,7 @@ var Table = function (_Component) {
         _this.closeModal = _this.closeModal.bind(_this);
         _this.sendForm = _this.sendForm.bind(_this);
         _this.showErrors = _this.showErrors.bind(_this);
+        _this.handleChangePage = _this.handleChangePage.bind(_this);
         return _this;
     }
 
@@ -59560,10 +59561,115 @@ var Table = function (_Component) {
                 }
             });
         }
+
+        //Cambio de página
+
+    }, {
+        key: 'handleChangePage',
+        value: function handleChangePage(event) {
+            var _state = this.state,
+                currentPage = _state.currentPage,
+                todosPerPage = _state.todosPerPage;
+
+            var indexOfLastTodo = currentPage * todosPerPage;
+            var pages = Math.ceil(this.props.champions.length / todosPerPage);
+            console.log(pages, currentPage, Number(event.target.id));
+            // Solo cambia de página si es igual o menor que el total de paginas creadas
+            if (Number(event.target.id) !== 0 && Number(event.target.id) <= pages) {
+                console.log('enter');
+                this.setState({
+                    currentPage: Number(event.target.id)
+                });
+            }
+        }
     }, {
         key: 'render',
         value: function render() {
             var _this5 = this;
+
+            var _state2 = this.state,
+                currentPage = _state2.currentPage,
+                todosPerPage = _state2.todosPerPage;
+
+            var indexOfLastTodo = currentPage * todosPerPage;
+            var indexOfFirstTodo = indexOfLastTodo - todosPerPage;
+            var currentTodos = this.props.champions.slice(indexOfFirstTodo, indexOfLastTodo);
+
+            var renderTodos = currentTodos.map(function (champion, index) {
+                return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    'tr',
+                    { key: champion.id },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'td',
+                        null,
+                        index + 1 + indexOfFirstTodo
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'td',
+                        null,
+                        champion.name
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'td',
+                        null,
+                        champion.type.name
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'td',
+                        null,
+                        champion.line.name
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'td',
+                        null,
+                        champion.genre
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'td',
+                        null,
+                        champion.date.split(" ")[0]
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'td',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { alt: champion.name, src: 'images/' + champion.photo, width: '50', height: '50' })
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        'td',
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
+                            { color: 'info', name: 'show', value: champion.id, onClick: _this5.handleClick.bind(_this5) },
+                            'Ver'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
+                            { color: 'warning', name: 'edit', value: champion.id, onClick: _this5.handleClick.bind(_this5) },
+                            'Editar'
+                        ),
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
+                            { color: 'danger', name: 'destroy', value: champion.id, onClick: _this5.handleDestroy.bind(_this5) },
+                            'Eliminar'
+                        )
+                    )
+                );
+            });
+
+            var pageNumbers = [];
+            var renderPageNumbers = [];
+            for (var i = 1; i <= Math.ceil(this.props.champions.length / todosPerPage); i++) {
+                var item = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                    __WEBPACK_IMPORTED_MODULE_2_reactstrap__["j" /* PaginationItem */],
+                    { key: i },
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_2_reactstrap__["k" /* PaginationLink */],
+                        { href: '#', id: i, onClick: this.handleChangePage },
+                        i
+                    )
+                );
+                pageNumbers.push(item);
+            }
 
             return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                 'div',
@@ -59641,66 +59747,7 @@ var Table = function (_Component) {
                                 __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
                                     'tbody',
                                     null,
-                                    this.props.data.champions.map(function (champion, index) {
-                                        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                            'tr',
-                                            { key: champion.id },
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
-                                                index + 1
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
-                                                champion.name
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
-                                                champion.type.name
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
-                                                champion.line.name
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
-                                                champion.genre
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
-                                                champion.date.split(" ")[0]
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement('img', { alt: champion.name, src: 'images/' + champion.photo, width: '50', height: '50' })
-                                            ),
-                                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                'td',
-                                                null,
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                    __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
-                                                    { color: 'info', name: 'show', value: champion.id, onClick: _this5.handleClick.bind(_this5) },
-                                                    'Ver'
-                                                ),
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                    __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
-                                                    { color: 'warning', name: 'edit', value: champion.id, onClick: _this5.handleClick.bind(_this5) },
-                                                    'Editar'
-                                                ),
-                                                __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                                                    __WEBPACK_IMPORTED_MODULE_2_reactstrap__["a" /* Button */],
-                                                    { color: 'danger', name: 'destroy', value: champion.id, onClick: _this5.handleDestroy.bind(_this5) },
-                                                    'Eliminar'
-                                                )
-                                            )
-                                        );
-                                    })
+                                    renderTodos
                                 )
                             ),
                             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_3__Modal__["a" /* default */], {
@@ -59711,6 +59758,21 @@ var Table = function (_Component) {
                                 sendForm: this.sendForm,
                                 closeModal: this.closeModal
                             })
+                        )
+                    ),
+                    __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                        __WEBPACK_IMPORTED_MODULE_2_reactstrap__["i" /* Pagination */],
+                        null,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["j" /* PaginationItem */],
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_reactstrap__["k" /* PaginationLink */], { previous: true, href: '#', id: currentPage - 1, onClick: this.handleChangePage })
+                        ),
+                        pageNumbers,
+                        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+                            __WEBPACK_IMPORTED_MODULE_2_reactstrap__["j" /* PaginationItem */],
+                            null,
+                            __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_reactstrap__["k" /* PaginationLink */], { next: true, href: '#', id: currentPage + 1, onClick: this.handleChangePage })
                         )
                     )
                 )
@@ -63835,116 +63897,7 @@ var FormShow = function (_Component) {
 /* harmony default export */ __webpack_exports__["a"] = (FormShow);
 
 /***/ }),
-/* 237 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_reactstrap__ = __webpack_require__(22);
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-
-
-
-
-var PaginationListComponent = function (_Component) {
-  _inherits(PaginationListComponent, _Component);
-
-  function PaginationListComponent(props) {
-    _classCallCheck(this, PaginationListComponent);
-
-    var _this = _possibleConstructorReturn(this, (PaginationListComponent.__proto__ || Object.getPrototypeOf(PaginationListComponent)).call(this));
-
-    _this.state = {
-      // todos: ['a','b','c','d','e','f','g','h','i','j','k'],
-      todos: [],
-      currentPage: 1,
-      todosPerPage: 3
-    };
-    _this.handleClick = _this.handleClick.bind(_this);
-    return _this;
-  }
-
-  _createClass(PaginationListComponent, [{
-    key: 'handleClick',
-    value: function handleClick(event) {
-      this.setState({
-        currentPage: Number(event.target.id)
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var _state = this.state,
-          currentPage = _state.currentPage,
-          todosPerPage = _state.todosPerPage;
-
-      // Logic for displaying current todos
-
-      var indexOfLastTodo = currentPage * todosPerPage;
-      var indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-      var currentTodos = this.props.champions.slice(indexOfFirstTodo, indexOfLastTodo);
-
-      var renderTodos = currentTodos.map(function (todo, index) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'li',
-          { key: index },
-          todo.name
-        );
-      });
-
-      // Logic for displaying page numbers
-      var pageNumbers = [];
-      for (var i = 1; i <= Math.ceil(this.props.champions.length / todosPerPage); i++) {
-        pageNumbers.push(i);
-      }
-
-      var renderPageNumbers = pageNumbers.map(function (number) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'li',
-          {
-            key: number,
-            id: number,
-            onClick: _this2.handleClick
-          },
-          number
-        );
-      });
-
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        'div',
-        null,
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'ul',
-          null,
-          renderTodos
-        ),
-        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-          'ul',
-          { id: 'page-numbers' },
-          renderPageNumbers
-        )
-      );
-    }
-  }]);
-
-  return PaginationListComponent;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-/* harmony default export */ __webpack_exports__["a"] = (PaginationListComponent);
-
-/***/ }),
+/* 237 */,
 /* 238 */
 /***/ (function(module, exports) {
 
