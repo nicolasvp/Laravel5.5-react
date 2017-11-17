@@ -1,1 +1,1 @@
-<footer class="footer text-center"> 2017 &copy; Laravel React </footer>
+<footer class="footer text-center" style="position: relative;"> 2017 &copy; Laravel React </footer>

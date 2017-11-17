@@ -11,10 +11,9 @@ class Body extends Component {
         // an example array of items to be paged
 //        var exampleItems = _.range(1, 4).map(i => { return { id: i, name: 'Item ' + i }; });       
 
-        var exampleItems = [{id: 1, name: 'Caitlyn'},{id: 2, name: 'Caitlyn2'},{id:3, name: 'Caitlyn3'},{id: 4, name: 'Caitlyn4'}];
         this.state = {
             champions: [],
-            exampleItems: exampleItems,
+            exampleItems: [],
             pageOfItems: []            
         };
 
@@ -32,15 +31,14 @@ class Body extends Component {
         })
         .then((response) => {
             response.data.champions.map(champion =>{
-                console.log(champion);
                 champion.date = this.format_date(champion.date);
                 this.state.champions.push(champion);
-               // this.state.exampleItems.push(champion);
+                this.state.exampleItems.push(champion);
               //  this.state.pageOfItems.push(champion);
             });
             this.setState({
                 champions: this.state.champions,
-              //  exampleItems: this.state.exampleItems,
+                exampleItems: this.state.exampleItems,
              //   pageOfItems: this.state.pageOfItems
             });
         })
@@ -112,7 +110,6 @@ class Body extends Component {
                     <div className="row">
                         <div className="col-md-12">
                             <Table data={ this.state } updateChampList={ this.updateChampList }/>
-                            <Pagination />
                         </div>
 
                         <div className="text-center">

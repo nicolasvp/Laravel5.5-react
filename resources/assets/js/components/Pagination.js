@@ -4,12 +4,16 @@ import { Pagination, PaginationItem, PaginationComponent, PaginationLink } from 
 
 
 class PaginationListComponent extends Component {
-constructor(props) {
+    constructor(props) {
         super(props);
-        this.state = { pager: {} };
+        this.state = { pager: {},
+                        items: this.props.items
+                    };
     }
  
     componentWillMount() {
+        console.log(this.state.items);
+        console.log(this.props.items,'willmount: '+this.props.items.length);
         // set page if items array isn't empty
         if (this.props.items && this.props.items.length) {
             this.setPage(this.props.initialPage);
@@ -18,6 +22,7 @@ constructor(props) {
  
     componentDidUpdate(prevProps, prevState) {
         // reset page if items array has changed
+        console.log(this.props.items,'didupdate: '+this.props.items.length);
         if (this.props.items !== prevProps.items) {
             this.setPage(this.props.initialPage);
         }
