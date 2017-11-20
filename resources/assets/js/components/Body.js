@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 import update from 'react-addons-update';
 import Table from './Table';
-import Pagination from './Pagination';
 import axios from 'axios';
 
 class Body extends Component {
 
     constructor(props){
         super(props);
-        // an example array of items to be paged
-//        var exampleItems = _.range(1, 4).map(i => { return { id: i, name: 'Item ' + i }; });       
 
         this.state = {
-            champions: [],
-            exampleItems: [],
-            pageOfItems: []            
+            champions: []           
         };
 
         this.updateChampList = this.updateChampList.bind(this);
         this.format_date = this.format_date.bind(this);
-        this.onChangePage = this.onChangePage.bind(this);
     }
 
     // Trae todos los campeones de la bdd y actualiza el state
@@ -33,23 +27,14 @@ class Body extends Component {
             response.data.champions.map(champion =>{
                 champion.date = this.format_date(champion.date);
                 this.state.champions.push(champion);
-                this.state.exampleItems.push(champion);
-              //  this.state.pageOfItems.push(champion);
             });
             this.setState({
                 champions: this.state.champions,
-                exampleItems: this.state.exampleItems,
-             //   pageOfItems: this.state.pageOfItems
             });
         })
         .catch(function (error) {
             console.log(error);
         });
-    }
-
-    onChangePage(pageOfItems) {
-        // update state with new page of items
-        this.setState({ pageOfItems: pageOfItems });
     }
 
     componentDidMount(){
@@ -99,25 +84,17 @@ class Body extends Component {
         }
     }
 
-	render(){
+	render(){     
 		return(
 		    <div>
                 <div className="preloader">
                     <div className="cssload-speeding-wheel"></div>
                 </div>
-
                 <div className="container" style={{ width: 1600 }}>              
                     <div className="row">
                         <div className="col-md-12">
                             <Table data={ this.state } updateChampList={ this.updateChampList }/>
                         </div>
-
-                        <div className="text-center">
-                            {this.state.pageOfItems.map(item =>
-                                <div key={ item.id }>{item.name}</div>
-                            )}
-                        </div>
-                        <Pagination items={ this.state.exampleItems } onChangePage={this.onChangePage} />
                     </div>
                 </div>
             </div>           

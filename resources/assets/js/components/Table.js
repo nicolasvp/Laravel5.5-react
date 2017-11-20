@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import ModalComponent from './Modal';
+import Pagination from './Pagination';
 
 class Table extends Component {
     constructor(props){
@@ -32,7 +33,9 @@ class Table extends Component {
                 genre: '',
                 photo: ''                  
             },
-            action: ''
+            action: '',
+            pageOfItems: [],
+            startIndex: 0 
         };
         this.handleInput = this.handleInput.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
@@ -41,6 +44,7 @@ class Table extends Component {
         this.closeModal = this.closeModal.bind(this);
         this.sendForm = this.sendForm.bind(this);
         this.showErrors = this.showErrors.bind(this);
+        this.onChangePage = this.onChangePage.bind(this);
     }
 
     // Envia el formulario al controlador ya sea para guardar o para actualizar
@@ -247,6 +251,16 @@ class Table extends Component {
       });
     }
 
+    onChangePage(pageOfItems,startIndex) {
+        // update state with new page of items
+        this.setState({ pageOfItems: pageOfItems });
+
+        if(startIndex !== '')
+        {
+            this.setState({ startIndex: startIndex * 2});
+        }
+    }
+
     render(){
         return(
             <div>
@@ -270,9 +284,9 @@ class Table extends Component {
                                 </thead>
                                 <tbody>
                                     {
-                                        this.props.data.champions.map((champion,index) =>
+                                        this.state.pageOfItems.map((champion,index) =>
                                             <tr key={ champion.id }>
-                                                <td>{ index + 1 }</td>
+                                                <td>{ this.state.startIndex + index - 1 }</td>
                                                 <td>{ champion.name }</td>
                                                 <td>{ champion.type.name }</td>
                                                 <td>{ champion.line.name }</td>
@@ -289,6 +303,7 @@ class Table extends Component {
                                     }
                                 </tbody>
                             </table>
+                            <Pagination items={ this.props.data.champions } onChangePage={this.onChangePage} />
                             <ModalComponent 
                                 data={ this.state } 
                                 handleClick={ this.handleClick } 

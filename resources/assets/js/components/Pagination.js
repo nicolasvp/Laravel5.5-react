@@ -2,27 +2,34 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Pagination, PaginationItem, PaginationComponent, PaginationLink } from 'reactstrap';
 
+var breaker = true;  
 
 class PaginationListComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { pager: {},
-                        items: this.props.items
-                    };
+        this.state = { pager: {} };
+               
     }
  
     componentWillMount() {
-        console.log(this.state.items);
-        console.log(this.props.items,'willmount: '+this.props.items.length);
         // set page if items array isn't empty
         if (this.props.items && this.props.items.length) {
             this.setPage(this.props.initialPage);
         }
     }
  
+    componentWillUpdate() {
+        // Condicion para romper el loop que se genera con componentdidupdate
+        if(breaker){
+            if (this.props.items && this.props.items.length) {
+                this.setPage(this.props.initialPage);
+            }      
+            breaker = false;        
+        }
+    }
+
     componentDidUpdate(prevProps, prevState) {
         // reset page if items array has changed
-        console.log(this.props.items,'didupdate: '+this.props.items.length);
         if (this.props.items !== prevProps.items) {
             this.setPage(this.props.initialPage);
         }
@@ -44,9 +51,9 @@ class PaginationListComponent extends Component {
  
         // update state
         this.setState({ pager: pager });
- 
+
         // call change page function in parent component
-        this.props.onChangePage(pageOfItems);
+        this.props.onChangePage(pageOfItems,pager.currentPage);
     }
  
     getPager(totalItems, currentPage, pageSize) {
@@ -110,10 +117,10 @@ class PaginationListComponent extends Component {
         return (
             <ul className="pagination">
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(1)}>First</a>
+                    <a onClick={() => this.setPage(1)}>Primero</a>
                 </li>
                 <li className={pager.currentPage === 1 ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(pager.currentPage - 1)}>Previous</a>
+                    <a onClick={() => this.setPage(pager.currentPage - 1)}>Anterior</a>
                 </li>
                 {pager.pages.map((page, index) =>
                     <li key={index} className={pager.currentPage === page ? 'active' : ''}>
@@ -121,10 +128,10 @@ class PaginationListComponent extends Component {
                     </li>
                 )}
                 <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(pager.currentPage + 1)}>Next</a>
+                    <a onClick={() => this.setPage(pager.currentPage + 1)}>Siguiente</a>
                 </li>
                 <li className={pager.currentPage === pager.totalPages ? 'disabled' : ''}>
-                    <a onClick={() => this.setPage(pager.totalPages)}>Last</a>
+                    <a onClick={() => this.setPage(pager.totalPages)}>Último</a>
                 </li>
             </ul>
         );
