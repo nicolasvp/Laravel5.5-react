@@ -22,7 +22,10 @@
     },
     "dependencies": {
         "react-addons-update": "^15.6.2",
-        "react-bootstrap": "^0.31.3",
+        "react-bootstrap": "^0.31.5",
+        "react-bootstrap-table-next": "^0.1.7",
+        "react-bootstrap-table2-filter": "^0.1.5",
+        "react-bootstrap-table2-paginator": "^0.1.1",
         "reactstrap": "^5.0.0-alpha.3"
     }
 }

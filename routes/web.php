@@ -15,8 +15,9 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 	Route::view('/','champion_list');
+	Route::view('/datatable','datatable');
 	Route::resource('/champion','ChampionController')->only(['index','store','show','edit','destroy']);
-	Route::post('/champion/updateChamp','ChampionController@updateChamp');
+	Route::put('/champion/updateChamp','ChampionController@updateChamp');
 	Route::get('/images/{filename}',function ($filename) {
 	    $file = \Storage::disk('public')->get($filename);
 	    return response($file, 200)->header('Content-Type', 'image/png');

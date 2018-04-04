@@ -15,6 +15,7 @@ class ChampionController extends Controller
         $types = Type::all();
         $lines = Line::all();
         $champions = Champion::with('line')->with('type')->get();
+        //$champions = Champion::select('id','name','date','photo')->get();
         return response()->json(['types' => $types,'lines' => $lines, 'champions' => $champions]);
     }
 
@@ -53,6 +54,7 @@ class ChampionController extends Controller
 
     public function show($id)
     {
+        dd('asda');
         $champion = Champion::find($id);
 
         return response()->json($champion->with('type')->with('line')->where('id',$id)->first());
@@ -67,7 +69,7 @@ class ChampionController extends Controller
 
     public function updateChamp(Request $request)
     {
-
+        dd($request->champion);
        Validator::make($request->all(), [
             'name' => 'required',
             'type' => 'required',
