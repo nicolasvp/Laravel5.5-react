@@ -19,7 +19,7 @@ class ModalComponent extends Component {
   _fetchData(){
       axios({
           method:'get',
-          url:'http://react.app/champion',
+          url:'http://react.test/champion',
           responseType:'json'
       })
       .then((response) => {

@@ -96,7 +96,7 @@ class Table extends Component {
 
             axios({
               method: 'post',
-              url: 'http://react.app/champion/updateChamp/',
+              url: 'http://react.test/champion/updateChamp/',
               data: formDataUpdate,
               headers: {'Content-Type': 'multipart/form-data'}
             })
