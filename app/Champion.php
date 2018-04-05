@@ -10,7 +10,7 @@ class Champion extends Model
 
     protected $fillable = ['name','type_id','line_id','photo','genre','date'];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function Type()
     {

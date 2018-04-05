@@ -33,7 +33,7 @@ class ShowButton extends Component {
 				<Button bsStyle="info" value={ this.props.data.id } onClick={ this.handleShow }>Mostrar</Button>
 				<Modal show={this.state.show} onHide={this.handleClose}>
 					<Modal.Header closeButton>
-						<Modal.Title><h3>{ this.props.data.name }</h3></Modal.Title>
+						<Modal.Title>{ this.props.data.name }</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
 						<ListGroup>

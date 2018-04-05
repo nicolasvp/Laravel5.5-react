@@ -15,7 +15,6 @@ class ChampionController extends Controller
         $types = Type::all();
         $lines = Line::all();
         $champions = Champion::with('line')->with('type')->get();
-        //$champions = Champion::select('id','name','date','photo')->get();
         return response()->json(['types' => $types,'lines' => $lines, 'champions' => $champions]);
     }
 
@@ -25,8 +24,8 @@ class ChampionController extends Controller
             'name' => 'required',
             'type' => 'required',
             'line' => 'required',
-            'date' => 'required',
-            'genre' => 'required',
+        //    'date' => 'required',
+        //    'genre' => 'required',
            // 'photo' => 'required',
         ])->validate();
 
@@ -35,17 +34,17 @@ class ChampionController extends Controller
             $file = $request->file('photo');
             $image_uploaded = \Storage::disk('public')->putFile('/', $file);            
         }
-
+/*
         $dateRequest = $request['date'];
         $date = strtotime($dateRequest);
         $formatedDate = date('Y-m-d',$date);
-
+*/
         $champ_created = Champion::create([
                             'name' => $request['name'],
                             'type_id' => $request['type'],
                             'line_id' => $request['line'],
-                            'date' => $formatedDate,
-                            'genre' => $request['genre'],
+                            'date' => null,
+                            'genre' => null,
                             'photo' => $image_uploaded
                         ]);
 
@@ -54,7 +53,6 @@ class ChampionController extends Controller
 
     public function show($id)
     {
-        dd('asda');
         $champion = Champion::find($id);
 
         return response()->json($champion->with('type')->with('line')->where('id',$id)->first());
